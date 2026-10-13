@@ -196,7 +196,7 @@ For security concerns, please see [SECURITY.md](SECURITY.md). Do **not** open a 
 
 ## License
 
-[MIT](LICENSE) — Copyright (c) 2024-2026 Blender MCP Contributors
+[MIT](LICENSE) — Copyright (c) 2026 Harvey Xia
 
 ---
 
@@ -288,4 +288,4 @@ IDE 配置：
 
 ### 许可证
 
-[MIT](LICENSE) — Copyright (c) 2024-2026 Blender MCP Contributors
+[MIT](LICENSE) — Copyright (c) 2026 Harvey Xia

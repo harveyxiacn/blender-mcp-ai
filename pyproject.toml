@@ -11,7 +11,7 @@ license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
 authors = [
-    {name = "Blender MCP Contributors"}
+    {name = "Harvey Xia"}
 ]
 keywords = ["blender", "mcp", "ai", "3d", "modeling", "animation", "model-context-protocol", "blender-addon", "natural-language", "generative-ai", "cursor", "claude"]
 classifiers = [
