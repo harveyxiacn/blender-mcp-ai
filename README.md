@@ -39,6 +39,11 @@
 > software. Install this project by cloning this repository — see
 > [Quick Start](#quick-start).
 
+> **Provenance:** The overall shape — an MCP server talking to a Blender addon
+> over a local socket — is the standard approach for this category of tool and
+> is shared by other Blender MCP projects, so the architectures look similar.
+> This repository is **not a fork**, and the implementation here is independent.
+
 ## Overview
 
 **Blender MCP AI** is an open-source [Model Context Protocol](https://modelcontextprotocol.io/) server that lets AI assistants control [Blender](https://www.blender.org/) through natural language. It works with any MCP-compatible client — **Cursor**, **Windsurf**, **Claude Desktop**, and more.
@@ -208,6 +213,10 @@ For security concerns, please see [SECURITY.md](SECURITY.md). Do **not** open a 
 > [`ahujasid/mcp-for-blender`](https://github.com/ahujasid/mcp-for-blender)（其旧版在 PyPI 上
 > 叫 `blender-mcp`）毫无关系。PyPI 上的 `blender-mcp` 属于**那个**项目，安装它**不会**安装本软件。
 > 安装本项目请克隆本仓库，见[快速开始](#快速开始)。
+
+> **来源说明：** 「MCP 服务器 + Blender 插件、走本地 socket」这个整体形态是本类工具的通用做法，
+> 其他 Blender MCP 项目也采用类似结构，因此架构层面看起来会相似。本仓库**不是 fork**，
+> 实现为独立完成。
 
 ### 概述
 
