@@ -75,6 +75,7 @@ test_*.py
 create_*.py
 build_scenes_by_spec.py
 demo_*.py
+!scripts/demo_tour.py
 fix_*.py
 list_objects.py
 

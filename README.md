@@ -133,6 +133,36 @@ Add to your MCP client config:
 }
 ```
 
+## Try It — a guided tour
+
+Want to see what this does before reading anything else? With Blender open and
+the addon enabled, build a demo scene and inspect it layer by layer:
+
+```bash
+uv run python scripts/demo_tour.py --clean
+```
+
+It drives the MCP socket 46 times and groups the result into one collection per
+layer, so you can hide everything except the thing you want to look at:
+
+| Collection | What it demonstrates | How to look at it |
+|---|---|---|
+| `L1_场景基础` | Object creation and transforms | Outliner → select `L1_Cube` → press **N** |
+| `L2_建模` | Bevel / Subdivision / Boolean modifiers | Properties → **wrench** tab, toggle each modifier |
+| `L3_材质` | Metal vs plastic, Principled BSDF values | Press **Z** → *Material Preview* |
+| `L4_灯光相机` | Three-point lighting and a camera | Press **Z** → *Rendered*; select a light to read its power |
+| `L5_UV` | Smart UV project | Open a **UV Editor**, `Tab` into edit mode, press `A` |
+| `L6_动画` | Keyframed bounce + spin | Timeline → press **Space** |
+| `L7_角色骨骼` | Generated character plus an armature | Hide other layers, then *Pose Mode* on `L7_Rig` |
+| `L8_物理` | Cloth and rigid-body simulation | Play the timeline |
+
+If every layer reports `OK`, your install works end to end. To check the
+renderer and exporters too, select `L4_Cam` and press **F12**, or run
+`blender_export_fbx` on any object.
+
+Running it twice? Pass `--clean` (as above) so the previous run's objects do not
+collide with the new names.
+
 ## Tool Profiles
 
 | Profile | Tools | Use Case |
@@ -278,6 +308,32 @@ IDE 配置：
   }
 }
 ```
+
+### 上手试一下（分层演示）
+
+想先看看它到底能做什么？保持 Blender 打开、插件已启用，然后运行：
+
+```bash
+uv run python scripts/demo_tour.py --clean
+```
+
+脚本会通过 MCP socket 执行 46 次调用，并把结果按图层分到各自的集合里，方便你逐层查看：
+
+| 集合 | 演示内容 | 怎么看 |
+|---|---|---|
+| `L1_场景基础` | 物体创建与变换 | 大纲视图选中 `L1_Cube`，按 **N** 看变换数值 |
+| `L2_建模` | Bevel / 细分 / 布尔 修改器 | 右侧**扳手图标**，逐个开关修改器看差异 |
+| `L3_材质` | 金属 vs 塑料、Principled BSDF 参数 | 按 **Z** → 材质预览 |
+| `L4_灯光相机` | 三点布光 + 相机 | 按 **Z** → 渲染预览；选中灯光看功率 |
+| `L5_UV` | Smart UV 展开 | 打开 **UV 编辑器**，按 `Tab` 进编辑模式再按 `A` |
+| `L6_动画` | 关键帧弹跳 + 自转 | 时间轴按 **空格** 播放 |
+| `L7_角色骨骼` | 程序生成角色 + 骨架 | 隐藏其他图层，对 `L7_Rig` 进**姿势模式** |
+| `L8_物理` | 布料 + 刚体模拟 | 播放时间轴 |
+
+每一层都显示 `OK`，就说明整套流程跑通了。想连渲染和导出一起验证，选中 `L4_Cam` 按 **F12**，
+或对任意物体调用 `blender_export_fbx`。
+
+重复运行时请带上 `--clean`（如上），否则上一轮的对象会和新的重名冲突。
 
 ### 社区
 
