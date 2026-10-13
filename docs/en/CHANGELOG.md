@@ -6,8 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-13
+
+### Changed
+
+- **The project is now named `blender-mcp-ai`** — the repository moved to
+  `github.com/harveyxiacn/blender-mcp-ai` (old links redirect), and both the
+  distribution and the console script are now `blender-mcp-ai`. The former name
+  collided with an unrelated project that owns `blender-mcp` on PyPI, so
+  `pip install blender-mcp` never installed this software. **If your MCP client
+  config still runs `blender-mcp`, change it to `blender-mcp-ai`.** There is no
+  PyPI release; install from source.
+- **Character proportions rewritten** — `blender_character_template_create` now
+  derives head, neck, torso, hips and legs from a single skeleton, so the parts
+  actually meet. Before this the head floated 0.22 m above the torso, eyes
+  pierced out through the face, and arms were buried inside the chest. Generated
+  characters will look different from 0.3.1.
+- Copyright is attributed to the actual author rather than a non-existent
+  "Blender MCP Contributors" entity, and `bl_info` reports the real version
+  instead of `(0, 1, 0)`.
+
 ### Added
 
+- **`scripts/demo_tour.py`** — builds a demo scene in eight layers over the MCP
+  socket, one collection per layer, then prints how to inspect each one. The
+  quickest way for a newcomer to confirm an install works end to end.
+- **`docs/en/TOUR.md`** / **`docs/zh/TOUR.md`** — the step-by-step walkthrough
+  behind that script, with per-layer viewing instructions.
 - **Unity / Quest game-engine FBX export** — `blender_export_fbx` now exposes full
   axis/transform control and a `unity_static_preset` flag for non-rigged
   props/environments. The preset applies the settings required for a clean Unity
@@ -35,6 +60,56 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   footgun `mesh_stats` can't.
 - **automation skill** workflow guide: added a "Game-engine export (Unity / Quest VR)"
   section.
+
+### Fixed
+
+- **Multibyte UTF-8 payloads no longer drop the connection (issue #2)** — the
+  addon decoded each `recv()` chunk on arrival, so a multi-byte character split
+  across a read raised `UnicodeDecodeError` and the message was dropped without
+  ever executing. Frames are now buffered as bytes and decoded only on complete
+  lines. Two related defects in the same function: `send()` could partially
+  write a large reply and desync the framing (now `sendall()`), and a protocol
+  error now returns a `PROTOCOL_ERROR` response instead of a silent disconnect.
+- **Long operations no longer tear down a healthy connection** — a render or
+  export blocks Blender's main thread, so the addon cannot answer
+  `system.get_info` until it returns. The client probed anyway, timed out after
+  5 s, and reconnected mid-command. The heartbeat is now skipped while a command
+  is outstanding. Verified: a 25 s command completes with 0 reconnects, and
+  fails with "Connection closed" when the guard is removed.
+- **Handlers no longer leak edit mode — this was silent data loss.** Seven
+  handlers entered EDIT mode and never returned, so the session stayed in
+  `EDIT_MESH`. The next `object.create` then replaced the object being edited:
+  in EDIT mode three consecutive creates leave one object and destroy the
+  edited one; in OBJECT mode all three survive. Fixed in `modeling.select`,
+  `extrude`, `subdivide`, `bevel` and `mesh_edit_advanced.edit`, `edge_mark`,
+  `select_by_trait` via the existing (previously unused) `ensure_object_mode()`.
+- **Missing parameters return a clean error instead of raising inside bpy** —
+  handlers read names with `params.get("object_name")` and passed the result
+  straight to `bpy.data.objects.get(...)`. A missing or misspelled key produced
+  `None`, and `bpy.data.objects.get(None)` raised inside bpy: callers saw
+  "SystemError: ... returned a result with an exception set" instead of
+  `OBJECT_NOT_FOUND`. 240 call sites across 38 modules now supply a default.
+- **Malformed error envelopes no longer crash the call** — `training.py`
+  returned `"error": "<string>"` from six sites, but every consumer expects the
+  `{code, message}` envelope, so an unknown action failed with
+  "'str' object has no attribute 'get'". `enrich_error()` now normalises a
+  non-dict error rather than falling over.
+- **Modifiers are no longer named after the raw enum** — adding a bevel without
+  naming it produced a modifier literally called `BEVEL`, which also made
+  `modifier_apply` unable to find it by name. Lighting and grease-pencil had the
+  same pattern.
+- Stale tool counts corrected throughout the docs and the GitHub description
+  (380 tools across 56 modules, and the per-profile counts).
+
+### Removed
+
+- **`examples/刀剑神域/`** — third-party copyrighted character art does not
+  belong in an MIT-licensed repository. The six tests that used it as a fixture
+  now skip when the directory is absent.
+- **The Discord community links** — the invite had gone stale
+  (`discord.gg/rurjWE45` now returns "Unknown Invite"), so the badge and links
+  are removed rather than left pointing at a dead invite. GitHub Discussions is
+  the community channel, and the automatic release announcement is disabled.
 
 ## [0.3.1] - 2026-06-02
 

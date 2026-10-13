@@ -363,7 +363,7 @@ python -m blender_mcp --port 9877
    - 复现步骤
 
 3. **社区支持**：
-   加入我们的 Discord 服务器获取实时帮助
+   在 [GitHub Discussions](https://github.com/harveyxiacn/blender-mcp-ai/discussions) 提问
 
 ## 下一步
 

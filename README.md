@@ -15,7 +15,6 @@
   <a href="LICENSE"><img src="https://img.shields.io/github/license/harveyxiacn/blender-mcp-ai.svg" alt="License: MIT"></a>
   <a href="https://github.com/harveyxiacn/blender-mcp-ai/issues"><img src="https://img.shields.io/github/issues/harveyxiacn/blender-mcp-ai.svg" alt="Issues"></a>
   <a href="https://github.com/harveyxiacn/blender-mcp-ai/discussions"><img src="https://img.shields.io/github/discussions/harveyxiacn/blender-mcp-ai" alt="Discussions"></a>
-  <a href="https://discord.gg/rurjWE45"><img src="https://img.shields.io/discord/1510824219498254456?logo=discord&logoColor=white&label=discord" alt="Discord"></a>
 </p>
 
 <p align="center">
@@ -209,7 +208,6 @@ All documentation is available in **English** and **中文 (Chinese)**.
 
 ## Community
 
-- **[Discord](https://discord.gg/rurjWE45)** — live chat, help, and show & tell
 - **[GitHub Discussions](https://github.com/harveyxiacn/blender-mcp-ai/discussions)** — questions, ideas, long-form discussion
 - **[Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues)** — bug reports and feature requests
 - **[Contributing Guide](docs/en/CONTRIBUTING.md)** — how to add tools, fix bugs, improve docs
@@ -342,7 +340,6 @@ uv run python scripts/demo_tour.py --clean
 
 ### 社区
 
-- **[Discord](https://discord.gg/rurjWE45)** — 实时交流、使用帮助、作品展示
 - **[GitHub Discussions](https://github.com/harveyxiacn/blender-mcp-ai/discussions)** — 提问、讨论、展示作品
 - **[Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues)** — 问题反馈与功能建议
 

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "blender-mcp-ai"
-version = "0.3.1"
+version = "0.4.0"
 description = "MCP server for controlling Blender with AI — 380 tools across modeling, animation, rendering, and more"
 readme = "README.md"
 license = "MIT"

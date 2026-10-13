@@ -4,6 +4,84 @@ Blender MCP 的所有重要变更记录。
 
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)。
 
+## [0.4.0] - 2026-10-13
+
+### 变更
+
+- **项目更名为 `blender-mcp-ai`** —— 仓库迁至
+  `github.com/harveyxiacn/blender-mcp-ai`（旧链接自动重定向），分发包名与命令行
+  均为 `blender-mcp-ai`。旧名与另一个项目撞名，而 PyPI 上的 `blender-mcp`
+  属于那个项目——`pip install blender-mcp` 从来装的都不是本软件。
+  **如果你的 MCP 客户端配置里写的还是 `blender-mcp`，请改成 `blender-mcp-ai`。**
+  本项目暂无 PyPI 发布，请从源码安装。
+- **角色比例重写** —— `blender_character_template_create` 现在由**同一套骨架**推导
+  头、颈、躯干、胯、腿，各部件真正接得上。此前头部悬浮在躯干上方 0.22 m、
+  眼睛穿透脸部、手臂埋在胸腔里。生成的角色外观会与 0.3.1 不同。
+- 版权归属改为真实作者，不再是虚构的 "Blender MCP Contributors"；
+  `bl_info` 也上报真实版本号，而非 `(0, 1, 0)`。
+
+### 新增
+
+- **`scripts/demo_tour.py`** —— 通过 MCP socket 搭出分八层的演示场景，每层一个集合，
+  跑完直接打印每层怎么看。新人确认安装是否可用最快的方式。
+- **`docs/en/TOUR.md`** / **`docs/zh/TOUR.md`** —— 配套的逐层图文教程。
+- **Unity / Quest 游戏引擎 FBX 导出** —— `blender_export_fbx` 现在暴露完整的
+  轴向/变换控制，并提供面向非骨骼道具与场景的 `unity_static_preset` 预设
+  （`axis_forward=-Z`、`axis_up=Y`、`use_space_transform`、`bake_space_transform`
+  使模型以零变换导入、无残留 -90° X 旋转，`mesh_smooth_type=FACE`，仅 Mesh/Empty）。
+  新增参数：`axis_forward`、`axis_up`、`use_space_transform`、`bake_space_transform`、
+  `apply_unit_scale`、`mesh_smooth_type`、`object_types`、`path_mode`。
+  除非显式设置预设或参数，默认值保持向后兼容。
+- **零变换导出保护** —— 在 `bake_space_transform` 下自动把导出物体的 `.location`
+  归零（导出后还原），让道具在 Unity 中落在 (0,0,0)，并对未应用的旋转/缩放给出警告。
+  由 `zero_transform_for_export`（默认 True）控制，导出结果会报告
+  `zeroed_for_export` 与 `warnings`。
+- **`blender_verify_fbx`** —— 重新导入导出的 FBX 并断言引擎就绪：世界原点 (0,0,0)、
+  三角面预算、单文件单物体、材质/自发光报告。返回 PASS/FAIL，便于建模智能体自检。
+- **`blender_get_object_info(include_transform_check=True)`** —— 新增 `unity_ready`
+  区块（世界坐标、位置/旋转/缩放是否为单位值、`will_import_at_origin`、提示），
+  能暴露 `mesh_stats` 看不出来的烘焙位移陷阱。
+- **docs/UNITY_QUEST_EXPORT.md** —— 移动 VR（Quest）导出检查清单：面数预算、
+  原点/轴向规则、静态预设、三角面数校验。
+
+### 修复
+
+- **多字节 UTF-8 载荷不再断连（issue #2）** —— addon 原本对每个 `recv()` 分块立即
+  decode，多字节字符被切开时会抛 `UnicodeDecodeError`，那条消息**根本没执行**就被丢弃。
+  现在按字节缓冲、只在完整行边界 decode。同一函数里另修两处：`send()` 可能只写一部分
+  导致换行分帧错位（改为 `sendall()`）；协议错误现在返回 `PROTOCOL_ERROR` 响应，
+  而不是静默断连。
+- **长时间操作不再掐断正常连接** —— 渲染/导出会占住 Blender 主线程，addon 在此期间
+  无法应答 `system.get_info`。客户端却照常心跳、5 秒超时后重连，把好好的连接断掉。
+  现在有命令在途时跳过心跳。实测：25 秒的命令 0 次重连；去掉该保护则报
+  "Connection closed"。
+- **handler 不再泄漏编辑模式 —— 这是静默数据丢失。** 7 个 handler 进入编辑模式后不退出，
+  会话一直停在 `EDIT_MESH`，此后每次 `object.create` 都会替换掉正在编辑的物体：
+  编辑模式下连建 3 个只剩 1 个、且被编辑的那个被销毁；对象模式下 3 个都在。
+  已修复 `modeling` 的 `select` / `extrude` / `subdivide` / `bevel` 与
+  `mesh_edit_advanced` 的 `edit` / `edge_mark` / `select_by_trait`，
+  复用了本就存在却从未被调用的 `ensure_object_mode()`。
+- **缺参数返回干净的领域错误，而不是在 bpy 内部抛异常** —— handler 用
+  `params.get("object_name")` 取值后直接传给 `bpy.data.objects.get(...)`，
+  参数缺失或拼错时得到 `None`，`bpy.data.objects.get(None)` 会在 bpy 内部抛异常，
+  调用方看到的是 "SystemError: ... returned a result with an exception set"，
+  而不是 `OBJECT_NOT_FOUND`。已为 38 个模块中的 240 处补上默认值。
+- **错误信封格式不合规不再导致调用崩溃** —— `training.py` 有六处返回
+  `"error": "<字符串>"`，但所有消费方都期望 `{code, message}` 结构，
+  于是未知 action 会崩成 "'str' object has no attribute 'get'"。
+  `enrich_error()` 现在会把非字典的 error 规范化，而不是直接倒下。
+- **修改器不再以原始枚举值命名** —— 不给名字添加倒角时，修改器会被命名为 `BEVEL`，
+  这也导致 `modifier_apply` 按名字找不到它。灯光与蜡笔模块有同样的写法。
+- 订正了文档与 GitHub 描述中过期的工具数量（380 个工具 / 56 个模块，以及各 Profile 数量）。
+
+### 移除
+
+- **`examples/刀剑神域/`** —— 第三方版权角色素材不应存在于 MIT 许可的仓库中。
+  以它为 fixture 的 6 个测试现在会在目录缺失时跳过。
+- **Discord 社区入口** —— 邀请链接已失效（`discord.gg/rurjWE45` 现在返回
+  "Unknown Invite"），因此移除徽章与链接，而不是留着一个点了打不开的死链接。
+  社区交流统一到 GitHub Discussions，发布时的自动公告也已停用。
+
 ## [0.3.0] - 2026-05-31
 
 ### 新增

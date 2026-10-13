@@ -38,9 +38,13 @@ jobs:
           files: |
             dist/*
 
-      - name: Announce changelog on Discord
-        if: success()
-        continue-on-error: true
-        env:
-          DISCORD_CHANGELOG_WEBHOOK: ${{ secrets.DISCORD_CHANGELOG_WEBHOOK }}
-        run: python scripts/discord_changelog.py
+      # Discord announcement is disabled: the community invite was retired, so
+      # there is nowhere to post. scripts/discord_changelog.py is kept, and the
+      # DISCORD_CHANGELOG_WEBHOOK secret is still set, so restoring this step is
+      # all that is needed to bring the announcement back.
+      # - name: Announce changelog on Discord
+      #   if: success()
+      #   continue-on-error: true
+      #   env:
+      #     DISCORD_CHANGELOG_WEBHOOK: ${{ secrets.DISCORD_CHANGELOG_WEBHOOK }}
+      #   run: python scripts/discord_changelog.py

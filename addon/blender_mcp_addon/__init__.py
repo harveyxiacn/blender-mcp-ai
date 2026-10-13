@@ -7,7 +7,7 @@ Enables MCP communication service in Blender, receiving and executing commands f
 bl_info = {
     "name": "Blender MCP",
     "author": "Harvey Xia",
-    "version": (0, 3, 1),
+    "version": (0, 4, 0),
     "blender": (4, 0, 0),
     "location": "View3D > Sidebar > MCP",
     "description": "Enable AI assistants to control Blender through MCP protocol",
