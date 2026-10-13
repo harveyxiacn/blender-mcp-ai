@@ -23,7 +23,7 @@ def _get_matching_objects(pattern: str) -> list[bpy.types.Object]:
 def handle_apply_material(params: dict[str, Any]) -> dict[str, Any]:
     """Batch apply material"""
     pattern = params.get("pattern")
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     replace_existing = params.get("replace_existing", True)
 
     material = bpy.data.materials.get(material_name)
@@ -221,7 +221,7 @@ def handle_add_modifier(params: dict[str, Any]) -> dict[str, Any]:
 def handle_set_parent(params: dict[str, Any]) -> dict[str, Any]:
     """Batch set parent"""
     pattern = params.get("pattern")
-    parent_name = params.get("parent_name")
+    parent_name = params.get("parent_name", "")
     keep_transform = params.get("keep_transform", True)
 
     parent = bpy.data.objects.get(parent_name)

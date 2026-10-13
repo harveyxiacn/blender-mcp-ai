@@ -151,7 +151,7 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_delete(params: dict[str, Any]) -> dict[str, Any]:
     """Delete an object"""
-    name = params.get("name")
+    name = params.get("name", "")
     delete_data = params.get("delete_data", True)
 
     obj = bpy.data.objects.get(name)
@@ -180,7 +180,7 @@ def handle_delete(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_duplicate(params: dict[str, Any]) -> dict[str, Any]:
     """Duplicate an object"""
-    name = params.get("name")
+    name = params.get("name", "")
     new_name = params.get("new_name")
     linked = params.get("linked", False)
     offset = params.get("offset", [0, 0, 0])
@@ -219,7 +219,7 @@ def handle_duplicate(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_transform(params: dict[str, Any]) -> dict[str, Any]:
     """Transform an object"""
-    name = params.get("name")
+    name = params.get("name", "")
 
     obj = bpy.data.objects.get(name)
     if not obj:
@@ -270,7 +270,7 @@ def handle_select(params: dict[str, Any]) -> dict[str, Any]:
     names = params.get("names")
     pattern = params.get("pattern")
     deselect_all = params.get("deselect_all", True)
-    set_active = params.get("set_active")
+    set_active = params.get("set_active", "")
 
     # Deselect all
     if deselect_all:
@@ -336,7 +336,7 @@ def handle_list(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_get_info(params: dict[str, Any]) -> dict[str, Any]:
     """Get object info"""
-    name = params.get("name")
+    name = params.get("name", "")
     include_mesh_stats = params.get("include_mesh_stats", True)
     include_modifiers = params.get("include_modifiers", True)
     include_materials = params.get("include_materials", True)
@@ -412,7 +412,7 @@ def handle_get_info(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_rename(params: dict[str, Any]) -> dict[str, Any]:
     """Rename an object"""
-    name = params.get("name")
+    name = params.get("name", "")
     new_name = params.get("new_name")
 
     obj = bpy.data.objects.get(name)
@@ -429,8 +429,8 @@ def handle_rename(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_set_parent(params: dict[str, Any]) -> dict[str, Any]:
     """Set parent-child relationship"""
-    child_name = params.get("child_name")
-    parent_name = params.get("parent_name")
+    child_name = params.get("child_name", "")
+    parent_name = params.get("parent_name", "")
     keep_transform = params.get("keep_transform", True)
 
     if not child_name:
@@ -545,7 +545,7 @@ def handle_set_origin(params: dict[str, Any]) -> dict[str, Any]:
       BOTTOM    — bottom-centre of the world-space bounding box (useful for characters)
       CENTER_OF_MASS — same as GEOMETRY/MEDIAN for meshes
     """
-    name = params.get("name")
+    name = params.get("name", "")
     origin_type = params.get("origin_type", "GEOMETRY")
     center = params.get("center", "MEDIAN")
 
@@ -624,7 +624,7 @@ def handle_apply_transform(params: dict[str, Any]) -> dict[str, Any]:
             - rotation: Apply rotation
             - scale: Apply scale
     """
-    name = params.get("name")
+    name = params.get("name", "")
     apply_location = params.get("location", False)
     apply_rotation = params.get("rotation", False)
     apply_scale = params.get("scale", True)

@@ -802,7 +802,7 @@ def handle_clear(params: dict[str, Any]) -> dict[str, Any]:
     """Remove reference image objects from the scene."""
     _ensure_object_mode()
 
-    collection_name = params.get("collection_name")
+    collection_name = params.get("collection_name", "")
     name_prefix = params.get("name_prefix", "Ref_")
     remove_collection_if_empty = params.get("remove_collection_if_empty", True)
 

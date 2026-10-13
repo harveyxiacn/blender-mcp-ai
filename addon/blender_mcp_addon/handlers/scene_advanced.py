@@ -187,8 +187,8 @@ def handle_environment_preset(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_scatter(params: dict[str, Any]) -> dict[str, Any]:
     """Scatter objects"""
-    source_name = params.get("source_object")
-    target_name = params.get("target_surface")
+    source_name = params.get("source_object", "")
+    target_name = params.get("target_surface", "")
     count = params.get("count", 100)
     seed = params.get("seed", 0)
     scale_min = params.get("scale_min", 0.8)
@@ -287,7 +287,7 @@ def handle_scatter(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_array_generate(params: dict[str, Any]) -> dict[str, Any]:
     """Array generation"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     count_x = params.get("count_x", 1)
     count_y = params.get("count_y", 1)
     count_z = params.get("count_z", 1)

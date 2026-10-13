@@ -18,10 +18,10 @@ def _get_constraint_target(obj: bpy.types.Object, is_bone: bool = False, bone_na
 
 def handle_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add constraint"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     constraint_type = params.get("constraint_type")
     name = params.get("name")
-    target = params.get("target")
+    target = params.get("target", "")
     subtarget = params.get("subtarget")
 
     obj = bpy.data.objects.get(object_name)
@@ -55,8 +55,8 @@ def handle_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_remove(params: dict[str, Any]) -> dict[str, Any]:
     """Remove constraint"""
-    object_name = params.get("object_name")
-    constraint_name = params.get("constraint_name")
+    object_name = params.get("object_name", "")
+    constraint_name = params.get("constraint_name", "")
 
     obj = bpy.data.objects.get(object_name)
     if not obj:
@@ -85,8 +85,8 @@ def handle_remove(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_copy_location(params: dict[str, Any]) -> dict[str, Any]:
     """Copy location constraint"""
-    object_name = params.get("object_name")
-    target = params.get("target")
+    object_name = params.get("object_name", "")
+    target = params.get("target", "")
     subtarget = params.get("subtarget")
     use_x = params.get("use_x", True)
     use_y = params.get("use_y", True)
@@ -127,8 +127,8 @@ def handle_copy_location(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_copy_rotation(params: dict[str, Any]) -> dict[str, Any]:
     """Copy rotation constraint"""
-    object_name = params.get("object_name")
-    target = params.get("target")
+    object_name = params.get("object_name", "")
+    target = params.get("target", "")
     subtarget = params.get("subtarget")
     use_x = params.get("use_x", True)
     use_y = params.get("use_y", True)
@@ -169,8 +169,8 @@ def handle_copy_rotation(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_copy_scale(params: dict[str, Any]) -> dict[str, Any]:
     """Copy scale constraint"""
-    object_name = params.get("object_name")
-    target = params.get("target")
+    object_name = params.get("object_name", "")
+    target = params.get("target", "")
     subtarget = params.get("subtarget")
     use_x = params.get("use_x", True)
     use_y = params.get("use_y", True)
@@ -211,8 +211,8 @@ def handle_copy_scale(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_track_to(params: dict[str, Any]) -> dict[str, Any]:
     """Track to constraint"""
-    object_name = params.get("object_name")
-    target = params.get("target")
+    object_name = params.get("object_name", "")
+    target = params.get("target", "")
     subtarget = params.get("subtarget")
     track_axis = params.get("track_axis", "TRACK_NEGATIVE_Z")
     up_axis = params.get("up_axis", "UP_Y")
@@ -251,7 +251,7 @@ def handle_track_to(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_limit(params: dict[str, Any]) -> dict[str, Any]:
     """Limit constraint"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     limit_type = params.get("limit_type", "LOCATION")
     min_x = params.get("min_x")
     max_x = params.get("max_x")
@@ -307,11 +307,11 @@ def handle_limit(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_ik(params: dict[str, Any]) -> dict[str, Any]:
     """IK constraint"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     bone_name = params.get("bone_name")
-    target = params.get("target")
+    target = params.get("target", "")
     subtarget = params.get("subtarget")
-    pole_target = params.get("pole_target")
+    pole_target = params.get("pole_target", "")
     pole_subtarget = params.get("pole_subtarget")
     chain_count = params.get("chain_count", 2)
     influence = params.get("influence", 1.0)
@@ -361,8 +361,8 @@ def handle_ik(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_parent(params: dict[str, Any]) -> dict[str, Any]:
     """Parent constraint"""
-    object_name = params.get("object_name")
-    target = params.get("target")
+    object_name = params.get("object_name", "")
+    target = params.get("target", "")
     subtarget = params.get("subtarget")
     influence = params.get("influence", 1.0)
 
@@ -397,7 +397,7 @@ def handle_parent(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_list(params: dict[str, Any]) -> dict[str, Any]:
     """List constraints"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
 
     obj = bpy.data.objects.get(object_name)
     if not obj:

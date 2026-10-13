@@ -99,7 +99,7 @@ def handle_describe_scene(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_analyze_object(params: dict[str, Any]) -> dict[str, Any]:
     """Analyze object"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     include_modifiers = params.get("include_modifiers", True)
     include_topology = params.get("include_topology", True)
 
@@ -286,7 +286,7 @@ def handle_suggest_optimization(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_auto_material(params: dict[str, Any]) -> dict[str, Any]:
     """Auto material"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     description = params.get("description", "")
     style = params.get("style", "realistic")
 

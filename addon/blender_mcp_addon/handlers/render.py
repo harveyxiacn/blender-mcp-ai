@@ -52,7 +52,7 @@ def handle_image(params: dict[str, Any]) -> dict[str, Any]:
     """Render image"""
     output_path = params.get("output_path")
     frame = params.get("frame")
-    camera = params.get("camera")
+    camera = params.get("camera", "")
     write_still = params.get("write_still", True)
 
     scene = bpy.context.scene

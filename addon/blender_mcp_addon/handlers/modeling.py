@@ -42,7 +42,7 @@ def _apply_modifier(obj: "bpy.types.Object", modifier_name: str) -> str | None:
 
 def handle_edit_mode(params: dict[str, Any]) -> dict[str, Any]:
     """Enter/exit edit mode"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     enter = params.get("enter", True)
 
     obj = bpy.data.objects.get(object_name)
@@ -68,7 +68,7 @@ def handle_edit_mode(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_select(params: dict[str, Any]) -> dict[str, Any]:
     """Mesh selection"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     select_mode = params.get("select_mode", "VERT")
     action = params.get("action", "ALL")
     random_ratio = params.get("random_ratio", 0.5)
@@ -111,7 +111,7 @@ def handle_select(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_extrude(params: dict[str, Any]) -> dict[str, Any]:
     """Extrude"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     direction = params.get("direction", [0, 0, 1])
     distance = params.get("distance", 1.0)
     use_normal = params.get("use_normal", True)
@@ -143,7 +143,7 @@ def handle_extrude(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_subdivide(params: dict[str, Any]) -> dict[str, Any]:
     """Subdivide"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     cuts = params.get("cuts", 1)
     smoothness = params.get("smoothness", 0.0)
 
@@ -166,7 +166,7 @@ def handle_subdivide(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bevel(params: dict[str, Any]) -> dict[str, Any]:
     """Bevel"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     width = params.get("width", 0.1)
     segments = params.get("segments", 1)
     profile = params.get("profile", 0.5)
@@ -191,7 +191,7 @@ def handle_bevel(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_modifier_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add modifier"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     modifier_type = params.get("modifier_type")
     modifier_name = params.get("modifier_name")
     settings = params.get("settings", {})
@@ -207,8 +207,9 @@ def handle_modifier_add(params: dict[str, Any]) -> dict[str, Any]:
     if bpy.context.mode != "OBJECT":
         bpy.ops.object.mode_set(mode="OBJECT")
 
-    # Add modifier
-    mod = obj.modifiers.new(name=modifier_name or modifier_type, type=modifier_type)
+    # Add modifier. Passing an empty name lets Blender apply its canonical
+    # default ("BEVEL" would otherwise show up in the UI as the raw enum value).
+    mod = obj.modifiers.new(name=modifier_name or "", type=modifier_type)
 
     # Apply settings
     for key, value in settings.items():
@@ -220,8 +221,8 @@ def handle_modifier_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_modifier_apply(params: dict[str, Any]) -> dict[str, Any]:
     """Apply modifier"""
-    object_name = params.get("object_name")
-    modifier_name = params.get("modifier_name")
+    object_name = params.get("object_name", "")
+    modifier_name = params.get("modifier_name", "")
 
     obj = bpy.data.objects.get(object_name)
     if not obj:
@@ -249,8 +250,8 @@ def handle_modifier_apply(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_modifier_remove(params: dict[str, Any]) -> dict[str, Any]:
     """Remove modifier"""
-    object_name = params.get("object_name")
-    modifier_name = params.get("modifier_name")
+    object_name = params.get("object_name", "")
+    modifier_name = params.get("modifier_name", "")
 
     obj = bpy.data.objects.get(object_name)
     if not obj:
@@ -287,8 +288,8 @@ def handle_boolean(params: dict[str, Any]) -> dict[str, Any]:
       data API (no bpy.ops). Suitable for simple/manifold inputs; can be slow
       on very heavy scenes.
     """
-    object_name = params.get("object_name")
-    target_name = params.get("target_name")
+    object_name = params.get("object_name", "")
+    target_name = params.get("target_name", "")
     operation = params.get("operation", "DIFFERENCE")
     apply = params.get("apply", False)
     hide_target = params.get("hide_target", apply)
@@ -381,7 +382,7 @@ def handle_shapekey_create(params: dict[str, Any]) -> dict[str, Any]:
             - key_name: Shape key name
             - from_mix: Whether to create from current mix state
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     key_name = params.get("key_name", "Key")
     from_mix = params.get("from_mix", False)
 
@@ -438,8 +439,8 @@ def handle_shapekey_edit(params: dict[str, Any]) -> dict[str, Any]:
             - value: Shape key value (0.0 - 1.0)
             - mute: Whether to mute
     """
-    object_name = params.get("object_name")
-    key_name = params.get("key_name")
+    object_name = params.get("object_name", "")
+    key_name = params.get("key_name", "")
     vertex_offsets = params.get("vertex_offsets", [])
     value = params.get("value")
     mute = params.get("mute")
@@ -513,7 +514,7 @@ def handle_shapekey_delete(params: dict[str, Any]) -> dict[str, Any]:
             - object_name: Object name
             - key_name: Shape key name
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     key_name = params.get("key_name")
 
     obj = bpy.data.objects.get(object_name)
@@ -563,7 +564,7 @@ def handle_shapekey_list(params: dict[str, Any]) -> dict[str, Any]:
         params:
             - object_name: Object name
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
 
     obj = bpy.data.objects.get(object_name)
     if not obj:
@@ -614,7 +615,7 @@ def handle_shapekey_create_expression(params: dict[str, Any]) -> dict[str, Any]:
                 - mouth_open: Mouth open
                 - mouth_wide: Mouth wide open
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     expressions = params.get("expressions", ["smile", "blink", "surprise", "angry"])
 
     obj = bpy.data.objects.get(object_name)
@@ -679,7 +680,7 @@ def handle_mesh_assign_material_to_faces(params: dict[str, Any]) -> dict[str, An
             - material_slot: Material slot index
             - material_name: Or specify by material name
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     face_indices = params.get("face_indices", [])
     material_slot = params.get("material_slot")
     material_name = params.get("material_name")
@@ -763,7 +764,7 @@ def handle_select_faces_by_material(params: dict[str, Any]) -> dict[str, Any]:
             - material_slot: Material slot index
             - material_name: Or specify by material name
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     material_slot = params.get("material_slot")
     material_name = params.get("material_name")
 
@@ -851,7 +852,7 @@ def handle_mesh_analyze(params: dict[str, Any]) -> dict[str, Any]:
     """
     import bmesh
 
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     target_platform = params.get("target_platform", "PC_CONSOLE")
 
     obj = bpy.data.objects.get(object_name)
@@ -1010,7 +1011,7 @@ def handle_mesh_optimize(params: dict[str, Any]) -> dict[str, Any]:
             - preserve_normals: Preserve normals
             - symmetry: Maintain symmetry
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     target_triangles = params.get("target_triangles")
     target_platform = params.get("target_platform", "PC_CONSOLE")
     preserve_uvs = params.get("preserve_uvs", True)
@@ -1096,7 +1097,7 @@ def handle_mesh_cleanup(params: dict[str, Any]) -> dict[str, Any]:
             - remove_loose: Remove loose geometry
     """
 
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     merge_distance = params.get("merge_distance", 0.0001)
     remove_doubles = params.get("remove_doubles", True)
     dissolve_degenerate = params.get("dissolve_degenerate", True)
@@ -1186,7 +1187,7 @@ def handle_tris_to_quads(params: dict[str, Any]) -> dict[str, Any]:
             - compare_vcol: Compare vertex colors
             - compare_materials: Compare materials
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     max_angle = params.get("max_angle", 40.0)
     compare_uvs = params.get("compare_uvs", True)
     compare_vcol = params.get("compare_vcol", True)
@@ -1259,7 +1260,7 @@ def handle_lod_generate(params: dict[str, Any]) -> dict[str, Any]:
             - ratio_step: Reduction ratio per level
             - create_collection: Whether to create a collection
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     lod_levels = params.get("lod_levels", 3)
     ratio_step = params.get("ratio_step", 0.5)
     create_collection = params.get("create_collection", True)
@@ -1354,7 +1355,7 @@ def handle_smart_subdivide(params: dict[str, Any]) -> dict[str, Any]:
             - apply_smooth: Apply smooth shading
             - quality: Quality level
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     levels = params.get("levels", 1)
     render_levels = params.get("render_levels", levels)
     use_creases = params.get("use_creases", True)
@@ -1444,7 +1445,7 @@ def handle_auto_smooth(params: dict[str, Any]) -> dict[str, Any]:
     """
     import math
 
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     angle = params.get("angle", 30.0)
     use_sharp_edges = params.get("use_sharp_edges", True)
 

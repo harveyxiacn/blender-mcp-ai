@@ -26,7 +26,7 @@ def handle_add_strip(params: dict[str, Any]) -> dict[str, Any]:
     start_frame = params.get("start_frame", 1)
     text = params.get("text")
     color = params.get("color")
-    scene_name = params.get("scene_name")
+    scene_name = params.get("scene_name", "")
 
     seq_editor = _ensure_vse()
     strips = seq_editor.sequences
@@ -134,7 +134,7 @@ def handle_cut(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_transform(params: dict[str, Any]) -> dict[str, Any]:
     """Transform a strip"""
-    strip_name = params.get("strip_name")
+    strip_name = params.get("strip_name", "")
     position = params.get("position")
     scale = params.get("scale")
     rotation = params.get("rotation")
@@ -176,8 +176,8 @@ def handle_add_effect(params: dict[str, Any]) -> dict[str, Any]:
     channel = params.get("channel", 1)
     start_frame = params.get("start_frame", 1)
     end_frame = params.get("end_frame", 30)
-    seq1_name = params.get("seq1_name")
-    seq2_name = params.get("seq2_name")
+    seq1_name = params.get("seq1_name", "")
+    seq2_name = params.get("seq2_name", "")
 
     seq_editor = _ensure_vse()
     strips = seq_editor.sequences

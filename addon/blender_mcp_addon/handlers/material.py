@@ -57,8 +57,8 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_assign(params: dict[str, Any]) -> dict[str, Any]:
     """Assign material"""
-    object_name = params.get("object_name")
-    material_name = params.get("material_name")
+    object_name = params.get("object_name", "")
+    material_name = params.get("material_name", "")
     slot_index = params.get("slot_index", 0)
 
     obj = bpy.data.objects.get(object_name)
@@ -90,7 +90,7 @@ def handle_assign(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_set_properties(params: dict[str, Any]) -> dict[str, Any]:
     """Set material properties"""
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     properties = params.get("properties", {})
 
     mat = bpy.data.materials.get(material_name)
@@ -156,7 +156,7 @@ def handle_set_properties(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_add_texture(params: dict[str, Any]) -> dict[str, Any]:
     """Add texture"""
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     texture_path = params.get("texture_path")
     texture_type = params.get("texture_type", "COLOR")
     params.get("mapping", "UV")
@@ -247,7 +247,7 @@ def handle_list(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_delete(params: dict[str, Any]) -> dict[str, Any]:
     """Delete material"""
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
 
     mat = bpy.data.materials.get(material_name)
     if not mat:
@@ -282,7 +282,7 @@ def handle_node_add(params: dict[str, Any]) -> dict[str, Any]:
             - settings: Node settings
             - connect_to: Node input to connect to
     """
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     node_type = params.get("node_type")
     settings = params.get("settings", {})
     connect_to = params.get("connect_to")
@@ -448,7 +448,7 @@ def handle_texture_apply(params: dict[str, Any]) -> dict[str, Any]:
                 - EMISSION: Emission map
                 - ALPHA: Alpha map
     """
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     image_path = params.get("image_path")
     mapping_type = params.get("mapping_type", "UV")
     texture_type = params.get("texture_type", "COLOR")
@@ -696,7 +696,7 @@ def handle_analyze(params: dict[str, Any]) -> dict[str, Any]:
             - material_name: Material name
             - target_engine: Target game engine
     """
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     target_engine = params.get("target_engine", "GENERIC")
 
     mat = bpy.data.materials.get(material_name)
@@ -840,7 +840,7 @@ def handle_optimize(params: dict[str, Any]) -> dict[str, Any]:
             - fix_color_space: Fix texture color spaces
             - combine_textures: Combine texture channels
     """
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     params.get("target_engine", "GENERIC")
     fix_metallic = params.get("fix_metallic", True)
     fix_color_space = params.get("fix_color_space", True)
@@ -1084,7 +1084,7 @@ def handle_fix_colorspace(params: dict[str, Any]) -> dict[str, Any]:
             - material_name: Material name
             - auto_detect: Auto detect
     """
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     params.get("auto_detect", True)
 
     mat = bpy.data.materials.get(material_name)
@@ -1154,7 +1154,7 @@ def handle_bake_textures(params: dict[str, Any]) -> dict[str, Any]:
     """
     import os
 
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     output_directory = params.get("output_directory")
     resolution = params.get("resolution", 1024)
     bake_types = params.get("bake_types", ["DIFFUSE", "ROUGHNESS", "NORMAL"])

@@ -14,7 +14,7 @@ import bpy
 def handle_import(params: dict[str, Any]) -> dict[str, Any]:
     """Import motion capture data"""
     filepath = params.get("filepath")
-    target_armature = params.get("target_armature")
+    target_armature = params.get("target_armature", "")
     scale = params.get("scale", 1.0)
     frame_start = params.get("frame_start", 1)
     use_fps_scale = params.get("use_fps_scale", False)
@@ -83,8 +83,8 @@ def handle_import(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_retarget(params: dict[str, Any]) -> dict[str, Any]:
     """Retarget action"""
-    source_name = params.get("source_armature")
-    target_name = params.get("target_armature")
+    source_name = params.get("source_armature", "")
+    target_name = params.get("target_armature", "")
     bone_mapping = params.get("bone_mapping", {})
 
     source = bpy.data.objects.get(source_name)
@@ -175,8 +175,8 @@ def handle_retarget(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_clean(params: dict[str, Any]) -> dict[str, Any]:
     """Clean action data"""
-    armature_name = params.get("armature_name")
-    action_name = params.get("action_name")
+    armature_name = params.get("armature_name", "")
+    action_name = params.get("action_name", "")
     threshold = params.get("threshold", 0.001)
     remove_noise = params.get("remove_noise", True)
 
@@ -257,9 +257,9 @@ def handle_clean(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_blend(params: dict[str, Any]) -> dict[str, Any]:
     """Blend actions"""
-    armature_name = params.get("armature_name")
-    action1_name = params.get("action1")
-    action2_name = params.get("action2")
+    armature_name = params.get("armature_name", "")
+    action1_name = params.get("action1", "")
+    action2_name = params.get("action2", "")
     blend_factor = params.get("blend_factor", 0.5)
     output_name = params.get("output_name", "BlendedAction")
 
@@ -340,7 +340,7 @@ def handle_blend(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bake(params: dict[str, Any]) -> dict[str, Any]:
     """Bake action"""
-    armature_name = params.get("armature_name")
+    armature_name = params.get("armature_name", "")
     frame_start = params.get("frame_start", 1)
     frame_end = params.get("frame_end", 250)
     only_selected = params.get("only_selected", False)

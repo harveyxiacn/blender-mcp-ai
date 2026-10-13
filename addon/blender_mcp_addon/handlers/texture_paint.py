@@ -12,7 +12,7 @@ import bpy
 
 def handle_mode(params: dict[str, Any]) -> dict[str, Any]:
     """Enter/exit texture paint mode"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     enable = params.get("enable", True)
 
     obj = bpy.data.objects.get(object_name)
@@ -140,7 +140,7 @@ def handle_set_brush(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_stroke(params: dict[str, Any]) -> dict[str, Any]:
     """Execute paint stroke"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     uv_points = params.get("uv_points", [])
     color = params.get("color")
 
@@ -227,7 +227,7 @@ def handle_stroke(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_fill(params: dict[str, Any]) -> dict[str, Any]:
     """Fill color"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     color = params.get("color", [1.0, 1.0, 1.0, 1.0])
     texture_slot = params.get("texture_slot", 0)
 
@@ -282,7 +282,7 @@ def handle_fill(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bake(params: dict[str, Any]) -> dict[str, Any]:
     """Bake texture"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     bake_type = params.get("bake_type", "DIFFUSE")
     width = params.get("width", 1024)
     height = params.get("height", 1024)
@@ -358,9 +358,9 @@ def handle_bake(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_slot(params: dict[str, Any]) -> dict[str, Any]:
     """Texture slot management"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     action = params.get("action", "ADD")
-    texture_name = params.get("texture_name")
+    texture_name = params.get("texture_name", "")
     slot_index = params.get("slot_index", 0)
 
     obj = bpy.data.objects.get(object_name)
@@ -419,7 +419,7 @@ def handle_slot(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_save(params: dict[str, Any]) -> dict[str, Any]:
     """Save texture"""
-    texture_name = params.get("texture_name")
+    texture_name = params.get("texture_name", "")
     filepath = params.get("filepath")
     file_format = params.get("file_format", "PNG")
 

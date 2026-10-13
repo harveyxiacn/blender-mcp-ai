@@ -57,7 +57,7 @@ def handle_texture_generate(params: dict[str, Any]) -> dict[str, Any]:
     width = params.get("width", 1024)
     height = params.get("height", 1024)
     seamless = params.get("seamless", True)
-    apply_to = params.get("apply_to")
+    apply_to = params.get("apply_to", "")
 
     try:
         # Note: Actual AI generation should be done on the MCP server side
@@ -174,7 +174,7 @@ def handle_concept_art(params: dict[str, Any]) -> dict[str, Any]:
 def handle_material_from_text(params: dict[str, Any]) -> dict[str, Any]:
     """Generate material from text description"""
     description = params.get("description")
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     params.get("generate_textures", True)
 
     obj = bpy.data.objects.get(object_name)

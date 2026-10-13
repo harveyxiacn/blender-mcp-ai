@@ -14,7 +14,7 @@ from .compat import select_only
 
 def handle_unwrap(params: dict[str, Any]) -> dict[str, Any]:
     """UV unwrap"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     method = params.get("method", "ANGLE_BASED")
     fill_holes = params.get("fill_holes", True)
     correct_aspect = params.get("correct_aspect", True)
@@ -43,7 +43,7 @@ def handle_unwrap(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_project(params: dict[str, Any]) -> dict[str, Any]:
     """UV projection"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     projection_type = params.get("projection_type", "CUBE")
     scale_to_bounds = params.get("scale_to_bounds", True)
 
@@ -76,7 +76,7 @@ def handle_project(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_smart_project(params: dict[str, Any]) -> dict[str, Any]:
     """Smart UV projection"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     angle_limit = params.get("angle_limit", 66.0)
     island_margin = params.get("island_margin", 0.0)
     area_weight = params.get("area_weight", 0.0)
@@ -105,7 +105,7 @@ def handle_smart_project(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_pack(params: dict[str, Any]) -> dict[str, Any]:
     """UV packing"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     margin = params.get("margin", 0.001)
     rotate = params.get("rotate", True)
 
@@ -131,7 +131,7 @@ def handle_pack(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_seam(params: dict[str, Any]) -> dict[str, Any]:
     """UV seam"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     action = params.get("action", "mark")
     edge_indices = params.get("edge_indices")
     from_sharp = params.get("from_sharp", False)
@@ -179,7 +179,7 @@ def handle_seam(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_transform(params: dict[str, Any]) -> dict[str, Any]:
     """UV transform"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     translate = params.get("translate")
     rotate = params.get("rotate")
     scale = params.get("scale")
@@ -237,7 +237,7 @@ def handle_analyze(params: dict[str, Any]) -> dict[str, Any]:
     """
     import bmesh
 
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     texture_resolution = params.get("texture_resolution", 1024)
 
     obj = bpy.data.objects.get(object_name)
@@ -386,7 +386,7 @@ def handle_optimize(params: dict[str, Any]) -> dict[str, Any]:
             - minimize_stretch: Minimize stretch
             - pack_efficiently: Pack efficiently
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     target_margin = params.get("target_margin", 0.01)
     straighten_uvs = params.get("straighten_uvs", True)
     minimize_stretch = params.get("minimize_stretch", True)
@@ -450,7 +450,7 @@ def handle_density_normalize(params: dict[str, Any]) -> dict[str, Any]:
             - target_density: Target density
             - texture_resolution: Texture resolution
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     target_density = params.get("target_density")
     texture_resolution = params.get("texture_resolution", 1024)
 
@@ -569,7 +569,7 @@ def handle_auto_seam(params: dict[str, Any]) -> dict[str, Any]:
     """
     import bmesh
 
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     angle_threshold = params.get("angle_threshold", 30.0)
     use_hard_edges = params.get("use_hard_edges", True)
     params.get("optimize_for_deformation", False)
@@ -631,7 +631,7 @@ def handle_grid_check(params: dict[str, Any]) -> dict[str, Any]:
             - object_name: Object name
             - grid_size: Checker grid size
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     grid_size = params.get("grid_size", 8)
 
     obj = bpy.data.objects.get(object_name)

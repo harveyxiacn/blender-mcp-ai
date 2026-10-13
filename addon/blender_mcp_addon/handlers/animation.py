@@ -11,7 +11,7 @@ import bpy
 
 def handle_keyframe_insert(params: dict[str, Any]) -> dict[str, Any]:
     """Insert keyframe"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     data_path = params.get("data_path")
     frame = params.get("frame")
     value = params.get("value")
@@ -67,7 +67,7 @@ def handle_keyframe_insert(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_keyframe_delete(params: dict[str, Any]) -> dict[str, Any]:
     """Delete keyframe"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     data_path = params.get("data_path")
     frame = params.get("frame")
 
@@ -97,7 +97,7 @@ def handle_keyframe_delete(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_set_interpolation(params: dict[str, Any]) -> dict[str, Any]:
     """Set interpolation type"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     interpolation = params.get("interpolation", "BEZIER")
 
     obj = bpy.data.objects.get(object_name)
@@ -183,7 +183,7 @@ def handle_goto_frame(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bake(params: dict[str, Any]) -> dict[str, Any]:
     """Bake animation"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     frame_start = params.get("frame_start")
     frame_end = params.get("frame_end")
     step = params.get("step", 1)
@@ -232,7 +232,7 @@ def handle_action_create(params: dict[str, Any]) -> dict[str, Any]:
             - action_name: Action name
             - fake_user: Whether to set fake user (prevent cleanup)
     """
-    armature_name = params.get("armature_name")
+    armature_name = params.get("armature_name", "")
     action_name = params.get("action_name", "Action")
     fake_user = params.get("fake_user", True)
 
@@ -281,7 +281,7 @@ def handle_action_create_from_poses(params: dict[str, Any]) -> dict[str, Any]:
                 ]
             - fake_user: Whether to set fake user
     """
-    armature_name = params.get("armature_name")
+    armature_name = params.get("armature_name", "")
     action_name = params.get("action_name", "Action")
     keyframes = params.get("keyframes", [])
     fake_user = params.get("fake_user", True)
@@ -400,8 +400,8 @@ def handle_action_assign(params: dict[str, Any]) -> dict[str, Any]:
             - armature_name: Armature name
             - action_name: Action name
     """
-    armature_name = params.get("armature_name")
-    action_name = params.get("action_name")
+    armature_name = params.get("armature_name", "")
+    action_name = params.get("action_name", "")
 
     obj = bpy.data.objects.get(armature_name)
     if not obj or obj.type != "ARMATURE":
@@ -437,8 +437,8 @@ def handle_nla_push_action(params: dict[str, Any]) -> dict[str, Any]:
             - track_name: NLA track name
             - start_frame: Start frame
     """
-    armature_name = params.get("armature_name")
-    action_name = params.get("action_name")
+    armature_name = params.get("armature_name", "")
+    action_name = params.get("action_name", "")
     track_name = params.get("track_name", "NLATrack")
     start_frame = params.get("start_frame", 1)
 

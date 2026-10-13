@@ -123,10 +123,10 @@ def handle_add(params: dict[str, Any]) -> dict[str, Any]:
 def handle_connect(params: dict[str, Any]) -> dict[str, Any]:
     """Connect nodes"""
     target = params.get("target")
-    from_node = params.get("from_node")
-    from_socket = params.get("from_socket")
-    to_node = params.get("to_node")
-    to_socket = params.get("to_socket")
+    from_node = params.get("from_node", "")
+    from_socket = params.get("from_socket", "")
+    to_node = params.get("to_node", "")
+    to_socket = params.get("to_socket", "")
 
     node_tree, tree_type = _get_node_tree(target)
     if not node_tree:
@@ -174,8 +174,8 @@ def handle_connect(params: dict[str, Any]) -> dict[str, Any]:
 def handle_set_value(params: dict[str, Any]) -> dict[str, Any]:
     """Set node value"""
     target = params.get("target")
-    node_name = params.get("node_name")
-    input_name = params.get("input_name")
+    node_name = params.get("node_name", "")
+    input_name = params.get("input_name", "")
     value = params.get("value")
 
     node_tree, tree_type = _get_node_tree(target)
@@ -208,7 +208,7 @@ def handle_set_value(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_shader_preset(params: dict[str, Any]) -> dict[str, Any]:
     """Apply shader preset"""
-    material_name = params.get("material_name")
+    material_name = params.get("material_name", "")
     preset = params.get("preset", "pbr_basic")
     color = params.get("color")
 
@@ -283,7 +283,7 @@ def handle_shader_preset(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_geonodes_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add geometry nodes modifier"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     modifier_name = params.get("modifier_name", "GeometryNodes")
 
     obj = bpy.data.objects.get(object_name)
@@ -326,7 +326,7 @@ def handle_geonodes_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_geonodes_preset(params: dict[str, Any]) -> dict[str, Any]:
     """Apply geometry nodes preset"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     preset = params.get("preset", "scatter")
     preset_params = params.get("params", {})
 

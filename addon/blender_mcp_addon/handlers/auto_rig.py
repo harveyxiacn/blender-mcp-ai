@@ -179,7 +179,7 @@ def handle_setup(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bone_add(params: dict[str, Any]) -> dict[str, Any]:
     """Manually add bone"""
-    armature_name = params.get("armature_name")
+    armature_name = params.get("armature_name", "")
     bone_name = params.get("bone_name")
     head = params.get("head")
     tail = params.get("tail")
@@ -220,11 +220,11 @@ def handle_bone_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_ik_setup(params: dict[str, Any]) -> dict[str, Any]:
     """Set up IK constraint"""
-    armature_name = params.get("armature_name")
-    bone_name = params.get("bone_name")
+    armature_name = params.get("armature_name", "")
+    bone_name = params.get("bone_name", "")
     chain_length = params.get("chain_length", 2)
-    target_name = params.get("target_name")
-    pole_target = params.get("pole_target")
+    target_name = params.get("target_name", "")
+    pole_target = params.get("pole_target", "")
 
     armature_obj = bpy.data.objects.get(armature_name)
     if not armature_obj or armature_obj.type != "ARMATURE":
@@ -273,8 +273,8 @@ def handle_ik_setup(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_weight_paint(params: dict[str, Any]) -> dict[str, Any]:
     """Automatic weight painting"""
-    object_name = params.get("object_name")
-    armature_name = params.get("armature_name")
+    object_name = params.get("object_name", "")
+    armature_name = params.get("armature_name", "")
     method = params.get("method", "automatic")
 
     obj = bpy.data.objects.get(object_name)
@@ -314,7 +314,7 @@ def handle_weight_paint(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_pose_apply(params: dict[str, Any]) -> dict[str, Any]:
     """Apply preset pose"""
-    armature_name = params.get("armature_name")
+    armature_name = params.get("armature_name", "")
     pose_name = params.get("pose_name", "t_pose")
 
     armature_obj = bpy.data.objects.get(armature_name)
@@ -352,10 +352,10 @@ def handle_pose_apply(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_constraint_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add bone constraint"""
-    armature_name = params.get("armature_name")
-    bone_name = params.get("bone_name")
+    armature_name = params.get("armature_name", "")
+    bone_name = params.get("bone_name", "")
     constraint_type = params.get("constraint_type", "COPY_ROTATION")
-    target_armature = params.get("target_armature")
+    target_armature = params.get("target_armature", "")
     target_bone = params.get("target_bone")
 
     armature_obj = bpy.data.objects.get(armature_name)

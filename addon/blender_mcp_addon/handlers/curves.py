@@ -155,7 +155,7 @@ def handle_spiral(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_to_mesh(params: dict[str, Any]) -> dict[str, Any]:
     """Convert curve to mesh"""
-    curve_name = params.get("curve_name")
+    curve_name = params.get("curve_name", "")
     resolution = params.get("resolution", 12)
     keep_original = params.get("keep_original", False)
 
@@ -184,7 +184,7 @@ def handle_to_mesh(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_extrude(params: dict[str, Any]) -> dict[str, Any]:
     """Curve extrude settings"""
-    curve_name = params.get("curve_name")
+    curve_name = params.get("curve_name", "")
     depth = params.get("depth", 0.1)
     bevel_depth = params.get("bevel_depth", 0.0)
     bevel_resolution = params.get("bevel_resolution", 0)

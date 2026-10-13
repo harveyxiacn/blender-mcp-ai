@@ -104,7 +104,7 @@ def handle_set(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_theme(params: dict[str, Any]) -> dict[str, Any]:
     """Theme settings"""
-    preset = params.get("preset")
+    preset = params.get("preset", "")
     custom_colors = params.get("custom_colors")
 
     try:

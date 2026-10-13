@@ -57,7 +57,7 @@ def _find_goz_paths() -> dict[str, str]:
 
 def handle_export(params: dict[str, Any]) -> dict[str, Any]:
     """Export to ZBrush"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     filepath = params.get("filepath")
     subdivisions = params.get("subdivisions", 0)
 
@@ -156,7 +156,7 @@ def handle_import(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_goz_send(params: dict[str, Any]) -> dict[str, Any]:
     """Send via GoZ"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
 
     obj = bpy.data.objects.get(object_name)
     if not obj:
@@ -256,7 +256,7 @@ def handle_goz_receive(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_maps(params: dict[str, Any]) -> dict[str, Any]:
     """Import ZBrush maps"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     displacement_path = params.get("displacement_path")
     normal_path = params.get("normal_path")
     polypaint_path = params.get("polypaint_path")
@@ -344,7 +344,7 @@ def handle_maps(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_decimate_export(params: dict[str, Any]) -> dict[str, Any]:
     """Export decimated model"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     target_faces = params.get("target_faces", 10000)
     filepath = params.get("filepath")
 

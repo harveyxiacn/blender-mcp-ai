@@ -49,7 +49,7 @@ def _find_substance_installation() -> str:
 
 def handle_export(params: dict[str, Any]) -> dict[str, Any]:
     """Export to Substance"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     filepath = params.get("filepath")
     format = params.get("format", "FBX")
     export_uvs = params.get("export_uvs", True)
@@ -119,7 +119,7 @@ def handle_export(params: dict[str, Any]) -> dict[str, Any]:
 def handle_import(params: dict[str, Any]) -> dict[str, Any]:
     """Import Substance textures"""
     texture_folder = params.get("texture_folder")
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     naming_convention = params.get("naming_convention", "substance")
 
     if not os.path.exists(texture_folder):
@@ -284,8 +284,8 @@ def handle_unlink(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bake(params: dict[str, Any]) -> dict[str, Any]:
     """Prepare for baking"""
-    high_poly = params.get("high_poly")
-    low_poly = params.get("low_poly")
+    high_poly = params.get("high_poly", "")
+    low_poly = params.get("low_poly", "")
     output_folder = params.get("output_folder")
     maps = params.get("maps", ["normal", "ao", "curvature"])
     resolution = params.get("resolution", 2048)

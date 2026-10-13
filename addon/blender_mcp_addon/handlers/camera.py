@@ -41,7 +41,7 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_set_properties(params: dict[str, Any]) -> dict[str, Any]:
     """Set camera properties"""
-    camera_name = params.get("camera_name")
+    camera_name = params.get("camera_name", "")
     properties = params.get("properties", {})
 
     if not camera_name:
@@ -90,8 +90,8 @@ def handle_set_properties(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_look_at(params: dict[str, Any]) -> dict[str, Any]:
     """Point camera at target"""
-    camera_name = params.get("camera_name")
-    target = params.get("target")
+    camera_name = params.get("camera_name", "")
+    target = params.get("target", "")
     use_constraint = params.get("use_constraint", False)
 
     if not camera_name:

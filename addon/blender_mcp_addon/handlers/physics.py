@@ -233,7 +233,7 @@ PIN_MODES = {
 
 def handle_cloth_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add cloth simulation (enhanced version)"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     preset = params.get("preset", "cotton")
     pin_group = params.get("pin_group")
     pin_mode = params.get("pin_mode")  # Automatic pin mode
@@ -409,7 +409,7 @@ def handle_cloth_list_presets(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_cloth_configure(params: dict[str, Any]) -> dict[str, Any]:
     """Configure cloth simulation parameters"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
 
     # Configurable parameters
     mass = params.get("mass")
@@ -463,7 +463,7 @@ def handle_cloth_configure(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_rigid_body_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add rigid body"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     body_type = params.get("body_type", "ACTIVE")
     shape = params.get("shape", "CONVEX_HULL")
     mass = params.get("mass", 1.0)
@@ -499,7 +499,7 @@ def handle_rigid_body_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_collision_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add collision body"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     damping = params.get("damping", 0.0)
     thickness = params.get("thickness", 0.02)
     friction = params.get("friction", 0.0)
@@ -547,7 +547,7 @@ def handle_collision_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_particles_create(params: dict[str, Any]) -> dict[str, Any]:
     """Create particle system"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     particle_type = params.get("particle_type", "EMITTER")
     count = params.get("count", 1000)
     lifetime = params.get("lifetime", 50.0)
@@ -599,7 +599,7 @@ def handle_force_field_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_soft_body_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add soft body"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     mass = params.get("mass", 1.0)
     friction = params.get("friction", 0.5)
     goal_strength = params.get("goal_strength", 0.7)

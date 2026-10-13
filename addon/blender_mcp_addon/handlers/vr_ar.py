@@ -208,7 +208,7 @@ def handle_ar_marker(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_xr_interaction(params: dict[str, Any]) -> dict[str, Any]:
     """Configure XR interaction point"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     interaction_type = params.get("interaction_type", "grab")
     highlight_color = params.get("highlight_color", [1, 1, 0, 1])
 

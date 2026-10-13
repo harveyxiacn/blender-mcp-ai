@@ -19,8 +19,9 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
     energy = params.get("energy", 1000.0)
     radius = params.get("radius", 0.25)
 
-    # Create light data
-    light_data = bpy.data.lights.new(name=name or light_type, type=light_type)
+    # Create light data. An empty name lets Blender apply its canonical
+    # default ("AREA" would otherwise become the datablock's name).
+    light_data = bpy.data.lights.new(name=name or "", type=light_type)
     light_data.color = color
     light_data.energy = energy
 
@@ -31,7 +32,7 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
         light_data.size = radius * 4
 
     # Create light object
-    light_obj = bpy.data.objects.new(name=name or light_type, object_data=light_data)
+    light_obj = bpy.data.objects.new(name=name or "", object_data=light_data)
     light_obj.location = location
     light_obj.rotation_euler = rotation
 
@@ -43,7 +44,7 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_set_properties(params: dict[str, Any]) -> dict[str, Any]:
     """Set light properties"""
-    light_name = params.get("light_name")
+    light_name = params.get("light_name", "")
     properties = params.get("properties", {})
 
     if not light_name:
@@ -90,7 +91,7 @@ def handle_set_properties(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_delete(params: dict[str, Any]) -> dict[str, Any]:
     """Delete light"""
-    light_name = params.get("light_name")
+    light_name = params.get("light_name", "")
 
     if not light_name:
         return {
@@ -114,7 +115,7 @@ def handle_delete(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_set_energy(params: dict[str, Any]) -> dict[str, Any]:
     """Set light energy"""
-    name = params.get("name")
+    name = params.get("name", "")
     energy = params.get("energy", 1000.0)
 
     obj = bpy.data.objects.get(name)

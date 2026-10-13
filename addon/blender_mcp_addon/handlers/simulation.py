@@ -11,7 +11,7 @@ import bpy
 
 def handle_fluid_domain(params: dict[str, Any]) -> dict[str, Any]:
     """Set up fluid domain"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     domain_type = params.get("domain_type", "LIQUID")
     resolution = params.get("resolution", 64)
     use_adaptive_domain = params.get("use_adaptive_domain", False)
@@ -47,7 +47,7 @@ def handle_fluid_domain(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_fluid_flow(params: dict[str, Any]) -> dict[str, Any]:
     """Set up fluid inflow/outflow"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     flow_type = params.get("flow_type", "LIQUID")  # Blender 5.0: SMOKE, BOTH, FIRE, LIQUID
     flow_behavior = params.get("flow_behavior", "INFLOW")  # INFLOW, OUTFLOW, GEOMETRY
     use_initial_velocity = params.get("use_initial_velocity", False)
@@ -99,7 +99,7 @@ def handle_fluid_flow(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_fluid_effector(params: dict[str, Any]) -> dict[str, Any]:
     """Set up fluid effector"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     effector_type = params.get("effector_type", "COLLISION")
 
     obj = bpy.data.objects.get(object_name)
@@ -124,7 +124,7 @@ def handle_fluid_effector(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_smoke_domain(params: dict[str, Any]) -> dict[str, Any]:
     """Set up smoke/fire domain"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     smoke_type = params.get("smoke_type", "SMOKE")
     resolution = params.get("resolution", 32)
     use_high_resolution = params.get("use_high_resolution", False)
@@ -162,7 +162,7 @@ def handle_smoke_domain(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_smoke_flow(params: dict[str, Any]) -> dict[str, Any]:
     """Set up smoke/fire emitter"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     flow_type = params.get("flow_type", "SMOKE")
     temperature = params.get("temperature", 1.0)
     density = params.get("density", 1.0)
@@ -194,7 +194,7 @@ def handle_smoke_flow(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_ocean(params: dict[str, Any]) -> dict[str, Any]:
     """Add ocean modifier"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     resolution = params.get("resolution", 7)
     spatial_size = params.get("spatial_size", 50)
     wave_scale = params.get("wave_scale", 1.0)
@@ -236,7 +236,7 @@ def handle_ocean(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_dynamic_paint_canvas(params: dict[str, Any]) -> dict[str, Any]:
     """Set up dynamic paint canvas"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     surface_type = params.get("surface_type", "PAINT")
     use_dissolve = params.get("use_dissolve", False)
     dissolve_speed = params.get("dissolve_speed", 80)
@@ -277,7 +277,7 @@ def handle_dynamic_paint_canvas(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_dynamic_paint_brush(params: dict[str, Any]) -> dict[str, Any]:
     """Set up dynamic paint brush"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     paint_color = params.get("paint_color", [1, 0, 0])
     paint_alpha = params.get("paint_alpha", 1.0)
 
@@ -304,7 +304,7 @@ def handle_dynamic_paint_brush(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bake(params: dict[str, Any]) -> dict[str, Any]:
     """Bake simulation"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     frame_start = params.get("frame_start", 1)
     frame_end = params.get("frame_end", 250)
 

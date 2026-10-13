@@ -240,7 +240,7 @@ def handle_batch_export(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_collection_export(params: dict[str, Any]) -> dict[str, Any]:
     """Collection export"""
-    collection_name = params.get("collection_name")
+    collection_name = params.get("collection_name", "")
     filepath = params.get("filepath")
     format = params.get("format", "FBX")
 

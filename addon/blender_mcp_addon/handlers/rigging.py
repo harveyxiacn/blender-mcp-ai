@@ -31,11 +31,11 @@ def handle_armature_create(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bone_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add bone"""
-    armature_name = params.get("armature_name")
+    armature_name = params.get("armature_name", "")
     bone_name = params.get("bone_name")
     head = params.get("head", [0, 0, 0])
     tail = params.get("tail", [0, 0, 1])
-    parent = params.get("parent")
+    parent = params.get("parent", "")
     use_connect = params.get("use_connect", False)
 
     obj = bpy.data.objects.get(armature_name)
@@ -73,7 +73,7 @@ def handle_bone_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_generate_rig(params: dict[str, Any]) -> dict[str, Any]:
     """Generate character rig"""
-    target_mesh = params.get("target_mesh")
+    target_mesh = params.get("target_mesh", "")
     rig_type = params.get("rig_type", "HUMAN")
     auto_weights = params.get("auto_weights", True)
 
@@ -188,11 +188,11 @@ def handle_generate_rig(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_ik_setup(params: dict[str, Any]) -> dict[str, Any]:
     """Set up IK"""
-    armature_name = params.get("armature_name")
-    bone_name = params.get("bone_name")
-    target = params.get("target")
+    armature_name = params.get("armature_name", "")
+    bone_name = params.get("bone_name", "")
+    target = params.get("target", "")
     chain_length = params.get("chain_length", 2)
-    pole_target = params.get("pole_target")
+    pole_target = params.get("pole_target", "")
 
     obj = bpy.data.objects.get(armature_name)
     if not obj or obj.type != "ARMATURE":
@@ -239,8 +239,8 @@ def handle_ik_setup(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_pose_set(params: dict[str, Any]) -> dict[str, Any]:
     """Set pose"""
-    armature_name = params.get("armature_name")
-    bone_name = params.get("bone_name")
+    armature_name = params.get("armature_name", "")
+    bone_name = params.get("bone_name", "")
     location = params.get("location")
     rotation = params.get("rotation")
     rotation_mode = params.get("rotation_mode", "XYZ")
@@ -286,8 +286,8 @@ def handle_pose_set(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_weight_paint(params: dict[str, Any]) -> dict[str, Any]:
     """Automatic weight painting"""
-    mesh_name = params.get("mesh_name")
-    armature_name = params.get("armature_name")
+    mesh_name = params.get("mesh_name", "")
+    armature_name = params.get("armature_name", "")
     params.get("auto_normalize", True)
 
     mesh_obj = bpy.data.objects.get(mesh_name)
@@ -333,8 +333,8 @@ def handle_armature_bind(params: dict[str, Any]) -> dict[str, Any]:
                 - EMPTY: Bind only, no weights
             - preserve_volume: Whether to preserve volume (prevents excessive deformation at joints)
     """
-    mesh_name = params.get("mesh_name")
-    armature_name = params.get("armature_name")
+    mesh_name = params.get("mesh_name", "")
+    armature_name = params.get("armature_name", "")
     bind_type = params.get("bind_type", "AUTO")
     preserve_volume = params.get("preserve_volume", True)
 
@@ -413,7 +413,7 @@ def handle_vertex_group_create(params: dict[str, Any]) -> dict[str, Any]:
             - vertex_indices: Vertex index list (optional)
             - weight: Weight value (0.0-1.0)
     """
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     group_name = params.get("group_name")
     vertex_indices = params.get("vertex_indices", [])
     weight = params.get("weight", 1.0)
@@ -452,8 +452,8 @@ def handle_vertex_group_assign(params: dict[str, Any]) -> dict[str, Any]:
             - weight: Weight value (0.0-1.0)
             - mode: Assign mode (REPLACE, ADD, SUBTRACT)
     """
-    object_name = params.get("object_name")
-    group_name = params.get("group_name")
+    object_name = params.get("object_name", "")
+    group_name = params.get("group_name", "")
     vertex_indices = params.get("vertex_indices", [])
     weight = params.get("weight", 1.0)
     mode = params.get("mode", "REPLACE")
@@ -501,8 +501,8 @@ def handle_bone_constraint_add(params: dict[str, Any]) -> dict[str, Any]:
             - constraint_type: Constraint type (IK, COPY_ROTATION, COPY_LOCATION, LIMIT_ROTATION, etc.)
             - settings: Constraint settings
     """
-    armature_name = params.get("armature_name")
-    bone_name = params.get("bone_name")
+    armature_name = params.get("armature_name", "")
+    bone_name = params.get("bone_name", "")
     constraint_type = params.get("constraint_type")
     settings = params.get("settings", {})
 

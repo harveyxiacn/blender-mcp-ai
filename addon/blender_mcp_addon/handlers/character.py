@@ -386,7 +386,7 @@ def _create_body_vertex_groups(obj: bpy.types.Object) -> None:
 
 def handle_add_face_features(params: dict[str, Any]) -> dict[str, Any]:
     """Add facial features (enhanced - using shape keys)"""
-    character_name = params.get("character_name")
+    character_name = params.get("character_name", "")
 
     # Supported facial parameters
     face_params = {
@@ -459,7 +459,7 @@ def handle_add_face_features(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_set_face_expression(params: dict[str, Any]) -> dict[str, Any]:
     """Set facial expression"""
-    character_name = params.get("character_name")
+    character_name = params.get("character_name", "")
     expression = params.get("expression", "neutral")
     intensity = params.get("intensity", 1.0)
 
@@ -542,7 +542,7 @@ def handle_set_face_expression(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_add_hair(params: dict[str, Any]) -> dict[str, Any]:
     """Add hair (enhanced - supports multiple hairstyle presets)"""
-    character_name = params.get("character_name")
+    character_name = params.get("character_name", "")
     hair_style = params.get("hair_style", "SHORT")
     hair_color = params.get("hair_color", [0.1, 0.08, 0.05])
     use_particles = params.get("use_particles", True)
@@ -693,7 +693,7 @@ def handle_add_hair(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_add_clothing(params: dict[str, Any]) -> dict[str, Any]:
     """Add clothing (enhanced - supports multiple clothing types and cloth simulation)"""
-    character_name = params.get("character_name")
+    character_name = params.get("character_name", "")
     clothing_type = params.get("clothing_type", "SHIRT")
     color = params.get("color", [0.5, 0.5, 0.5])
     secondary_color = params.get("secondary_color")  # Optional secondary color
@@ -941,7 +941,7 @@ def _add_cloth_simulation(clothing: bpy.types.Object, preset: str) -> None:
 
 def handle_create_outfit(params: dict[str, Any]) -> dict[str, Any]:
     """Create complete outfit"""
-    character_name = params.get("character_name")
+    character_name = params.get("character_name", "")
     outfit_style = params.get("outfit_style", "CASUAL")
     color_scheme = params.get("color_scheme", "DEFAULT")
     use_cloth_simulation = params.get("use_cloth_simulation", False)

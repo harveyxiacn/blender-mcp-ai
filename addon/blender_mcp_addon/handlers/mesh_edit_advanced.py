@@ -14,7 +14,7 @@ import bpy
 
 def handle_edit(params: dict[str, Any]) -> dict[str, Any]:
     """Execute advanced mesh editing operations"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     operation = params.get("operation")
     op_params = params.get("params", {})
 
@@ -138,7 +138,7 @@ def handle_edit(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_edge_mark(params: dict[str, Any]) -> dict[str, Any]:
     """Set edge marks (crease/sharp/seam/bevel_weight)"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     mark_type = params.get("mark_type")
     value = params.get("value", 1.0)
     clear = params.get("clear", False)
@@ -203,7 +203,7 @@ def handle_edge_mark(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_select_by_trait(params: dict[str, Any]) -> dict[str, Any]:
     """Select mesh elements by trait"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     select_mode = params.get("select_mode", "FACE")
     trait = params.get("trait")
     trait_params = params.get("params", {})
@@ -302,7 +302,7 @@ def handle_select_by_trait(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_vertex_group(params: dict[str, Any]) -> dict[str, Any]:
     """Vertex group operations"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     action = params.get("action")
     group_name = params.get("group_name", "Group")
     weight = params.get("weight", 1.0)
@@ -379,7 +379,7 @@ def handle_vertex_group(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_vertex_color(params: dict[str, Any]) -> dict[str, Any]:
     """Vertex color operations"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     action = params.get("action", "CREATE")
     layer_name = params.get("layer_name", "Col")
     color = params.get("color", [1.0, 1.0, 1.0, 1.0])

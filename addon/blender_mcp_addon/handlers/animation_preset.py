@@ -620,7 +620,7 @@ ANIMATION_PRESETS = {
 
 def handle_apply(params: dict[str, Any]) -> dict[str, Any]:
     """Apply preset animation"""
-    armature_name = params.get("armature_name")
+    armature_name = params.get("armature_name", "")
     preset = params.get("preset", "idle")
     speed = params.get("speed", 1.0)
     loop = params.get("loop", True)
@@ -691,7 +691,7 @@ def handle_apply(params: dict[str, Any]) -> dict[str, Any]:
 def handle_action_create(params: dict[str, Any]) -> dict[str, Any]:
     """Create action"""
     action_name = params.get("action_name")
-    armature_name = params.get("armature_name")
+    armature_name = params.get("armature_name", "")
     frame_start = params.get("frame_start", 1)
     frame_end = params.get("frame_end", 60)
 
@@ -712,8 +712,8 @@ def handle_action_create(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_nla_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add NLA strip"""
-    object_name = params.get("object_name")
-    action_name = params.get("action_name")
+    object_name = params.get("object_name", "")
+    action_name = params.get("action_name", "")
     track_name = params.get("track_name", "NlaTrack")
     start_frame = params.get("start_frame", 1)
     blend_type = params.get("blend_type", "REPLACE")
@@ -751,8 +751,8 @@ def handle_nla_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_follow_path(params: dict[str, Any]) -> dict[str, Any]:
     """Path animation"""
-    object_name = params.get("object_name")
-    path_name = params.get("path_name")
+    object_name = params.get("object_name", "")
+    path_name = params.get("path_name", "")
     duration = params.get("duration", 100)
     follow_rotation = params.get("follow_rotation", True)
 
@@ -790,7 +790,7 @@ def handle_follow_path(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bake(params: dict[str, Any]) -> dict[str, Any]:
     """Bake animation"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     frame_start = params.get("frame_start", 1)
     frame_end = params.get("frame_end", 250)
     params.get("bake_types", ["LOCATION", "ROTATION", "SCALE"])

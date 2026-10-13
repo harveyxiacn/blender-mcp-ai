@@ -12,7 +12,7 @@ import bpy
 def handle_create(params: dict[str, Any]) -> dict[str, Any]:
     """Create scene"""
     name = params.get("name", "Scene")
-    copy_from = params.get("copy_from")
+    copy_from = params.get("copy_from", "")
 
     if copy_from:
         # Copy from existing scene
@@ -53,7 +53,7 @@ def handle_list(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_get_info(params: dict[str, Any]) -> dict[str, Any]:
     """Get scene info"""
-    scene_name = params.get("scene_name")
+    scene_name = params.get("scene_name", "")
 
     if scene_name:
         scene = bpy.data.scenes.get(scene_name)
@@ -82,7 +82,7 @@ def handle_get_info(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_switch(params: dict[str, Any]) -> dict[str, Any]:
     """Switch scene"""
-    scene_name = params.get("scene_name")
+    scene_name = params.get("scene_name", "")
 
     scene = bpy.data.scenes.get(scene_name)
     if not scene:
@@ -98,7 +98,7 @@ def handle_switch(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_delete(params: dict[str, Any]) -> dict[str, Any]:
     """Delete scene"""
-    scene_name = params.get("scene_name")
+    scene_name = params.get("scene_name", "")
 
     if len(bpy.data.scenes) <= 1:
         return {
@@ -123,7 +123,7 @@ def handle_delete(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_set_settings(params: dict[str, Any]) -> dict[str, Any]:
     """Set scene settings"""
-    scene_name = params.get("scene_name")
+    scene_name = params.get("scene_name", "")
     settings = params.get("settings", {})
 
     if scene_name:

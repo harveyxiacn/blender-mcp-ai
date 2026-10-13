@@ -325,7 +325,7 @@ def handle_setup(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_outline(params: dict[str, Any]) -> dict[str, Any]:
     """Add outline effect"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     method = params.get("method", "SOLIDIFY")
     thickness = params.get("thickness", 0.02)
     color = params.get("color", [0, 0, 0])
@@ -419,8 +419,8 @@ def handle_outline(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_bake_maps(params: dict[str, Any]) -> dict[str, Any]:
     """Bake maps (high poly → low poly)"""
-    high_poly_name = params.get("high_poly")
-    low_poly_name = params.get("low_poly")
+    high_poly_name = params.get("high_poly", "")
+    low_poly_name = params.get("low_poly", "")
     maps = params.get("maps", ["NORMAL", "AO"])
     resolution = params.get("resolution", 2048)
     cage_extrusion = params.get("cage_extrusion", 0.1)

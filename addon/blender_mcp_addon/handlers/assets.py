@@ -12,7 +12,7 @@ import bpy
 
 def handle_mark(params: dict[str, Any]) -> dict[str, Any]:
     """Mark as asset"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     asset_type = params.get("asset_type", "OBJECT")
     description = params.get("description", "")
     tags = params.get("tags", [])
@@ -235,7 +235,7 @@ def handle_search(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_preview(params: dict[str, Any]) -> dict[str, Any]:
     """Generate asset preview"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
 
     obj = bpy.data.objects.get(object_name)
     if not obj:

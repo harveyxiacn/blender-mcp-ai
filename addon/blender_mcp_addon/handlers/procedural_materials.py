@@ -923,8 +923,8 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_wear(params: dict[str, Any]) -> dict[str, Any]:
     """Add wear effect"""
-    object_name = params.get("object_name")
-    material_name = params.get("material_name")
+    object_name = params.get("object_name", "")
+    material_name = params.get("material_name", "")
     wear_type = params.get("wear_type", "EDGE_WEAR")
     intensity = params.get("intensity", 0.5)
     wear_color = params.get("color")

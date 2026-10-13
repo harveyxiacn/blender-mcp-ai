@@ -11,7 +11,7 @@ import bpy
 
 def handle_add(params: dict[str, Any]) -> dict[str, Any]:
     """Add hair system"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     name = params.get("name", "Hair")
     hair_length = params.get("hair_length", 0.1)
     hair_count = params.get("hair_count", 1000)
@@ -55,8 +55,8 @@ def handle_add(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_settings(params: dict[str, Any]) -> dict[str, Any]:
     """Set hair properties"""
-    object_name = params.get("object_name")
-    system_name = params.get("system_name")
+    object_name = params.get("object_name", "")
+    system_name = params.get("system_name", "")
     hair_length = params.get("hair_length")
     root_radius = params.get("root_radius")
     tip_radius = params.get("tip_radius")
@@ -104,7 +104,7 @@ def handle_settings(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_dynamics(params: dict[str, Any]) -> dict[str, Any]:
     """Set hair dynamics"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     enable = params.get("enable", True)
     stiffness = params.get("stiffness", 0.5)
     damping = params.get("damping", 0.1)
@@ -149,7 +149,7 @@ def handle_dynamics(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_material(params: dict[str, Any]) -> dict[str, Any]:
     """Set hair material"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     color = params.get("color", [0.1, 0.05, 0.02, 1.0])
     roughness = params.get("roughness", 0.4)
     use_hair_bsdf = params.get("use_hair_bsdf", True)
@@ -212,7 +212,7 @@ def handle_material(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_children(params: dict[str, Any]) -> dict[str, Any]:
     """Set hair children"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     child_type = params.get("child_type", "INTERPOLATED")
     child_count = params.get("child_count", 10)
     clump = params.get("clump", 0.0)
@@ -250,7 +250,7 @@ def handle_children(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_groom(params: dict[str, Any]) -> dict[str, Any]:
     """Hair grooming operations"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     action = params.get("action", "COMB")
     strength = params.get("strength", 0.5)
 

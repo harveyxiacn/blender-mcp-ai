@@ -12,7 +12,7 @@ import bpy
 
 def handle_mode(params: dict[str, Any]) -> dict[str, Any]:
     """Enter/exit sculpt mode"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     enable = params.get("enable", True)
 
     obj = bpy.data.objects.get(object_name)
@@ -127,7 +127,7 @@ def handle_set_brush(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_stroke(params: dict[str, Any]) -> dict[str, Any]:
     """Execute sculpt stroke"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     stroke_points = params.get("stroke_points", [])
     brush_type = params.get("brush_type")
 
@@ -207,7 +207,7 @@ def handle_stroke(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_remesh(params: dict[str, Any]) -> dict[str, Any]:
     """Remesh"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     mode = params.get("mode", "VOXEL")
     voxel_size = params.get("voxel_size", 0.1)
     smooth_normals = params.get("smooth_normals", True)
@@ -257,7 +257,7 @@ def handle_remesh(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_multires(params: dict[str, Any]) -> dict[str, Any]:
     """Multiresolution subdivision"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     levels = params.get("levels", 2)
     sculpt_level = params.get("sculpt_level")
 
@@ -309,7 +309,7 @@ def handle_multires(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_mask(params: dict[str, Any]) -> dict[str, Any]:
     """Mask operations"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     action = params.get("action", "CLEAR")
 
     obj = bpy.data.objects.get(object_name)
@@ -374,7 +374,7 @@ def handle_symmetry(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_dyntopo(params: dict[str, Any]) -> dict[str, Any]:
     """Dynamic topology"""
-    object_name = params.get("object_name")
+    object_name = params.get("object_name", "")
     enable = params.get("enable", True)
     detail_size = params.get("detail_size", 12.0)
     detail_type = params.get("detail_type", "RELATIVE")

@@ -67,7 +67,7 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_layer(params: dict[str, Any]) -> dict[str, Any]:
     """Layer operations"""
-    gpencil_name = params.get("gpencil_name")
+    gpencil_name = params.get("gpencil_name", "")
     action = params.get("action", "ADD")
     layer_name = params.get("layer_name", "Layer")
     new_name = params.get("new_name")
@@ -135,7 +135,7 @@ def handle_layer(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_frame(params: dict[str, Any]) -> dict[str, Any]:
     """Frame operations"""
-    gpencil_name = params.get("gpencil_name")
+    gpencil_name = params.get("gpencil_name", "")
     layer_name = params.get("layer_name", "Layer")
     action = params.get("action", "ADD")
     frame_number = params.get("frame_number", 1)
@@ -198,7 +198,7 @@ def handle_frame(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_draw(params: dict[str, Any]) -> dict[str, Any]:
     """Draw stroke"""
-    gpencil_name = params.get("gpencil_name")
+    gpencil_name = params.get("gpencil_name", "")
     layer_name = params.get("layer_name", "Layer")
     points = params.get("points", [])
     material_index = params.get("material_index", 0)
@@ -312,7 +312,7 @@ def handle_draw(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_material(params: dict[str, Any]) -> dict[str, Any]:
     """Grease pencil material"""
-    gpencil_name = params.get("gpencil_name")
+    gpencil_name = params.get("gpencil_name", "")
     name = params.get("name", "GPMaterial")
     mode = params.get("mode", "LINE")
     stroke_color = params.get("stroke_color", [0, 0, 0, 1])
@@ -353,7 +353,7 @@ def handle_material(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_modifier(params: dict[str, Any]) -> dict[str, Any]:
     """Grease pencil modifier"""
-    gpencil_name = params.get("gpencil_name")
+    gpencil_name = params.get("gpencil_name", "")
     modifier_type = params.get("modifier_type", "SMOOTH")
     modifier_name = params.get("modifier_name")
     settings = params.get("settings", {})
@@ -392,7 +392,7 @@ def handle_modifier(params: dict[str, Any]) -> dict[str, Any]:
     mod_type = mod_map.get(modifier_type, "GP_SMOOTH")
 
     # Add modifier
-    mod = obj.grease_pencil_modifiers.new(name=modifier_name or modifier_type, type=mod_type)
+    mod = obj.grease_pencil_modifiers.new(name=modifier_name or "", type=mod_type)
 
     # Apply settings
     for key, value in settings.items():
@@ -404,7 +404,7 @@ def handle_modifier(params: dict[str, Any]) -> dict[str, Any]:
 
 def handle_effect(params: dict[str, Any]) -> dict[str, Any]:
     """Grease pencil effect"""
-    gpencil_name = params.get("gpencil_name")
+    gpencil_name = params.get("gpencil_name", "")
     effect_type = params.get("effect_type", "BLUR")
     effect_name = params.get("effect_name")
 
@@ -435,14 +435,14 @@ def handle_effect(params: dict[str, Any]) -> dict[str, Any]:
     fx_type = effect_map.get(effect_type, "FX_BLUR")
 
     # Add effect
-    fx = obj.shader_effects.new(name=effect_name or effect_type, type=fx_type)
+    fx = obj.shader_effects.new(name=effect_name or "", type=fx_type)
 
     return {"success": True, "data": {"effect_name": fx.name, "effect_type": effect_type}}
 
 
 def handle_convert(params: dict[str, Any]) -> dict[str, Any]:
     """Convert"""
-    gpencil_name = params.get("gpencil_name")
+    gpencil_name = params.get("gpencil_name", "")
     target_type = params.get("target_type", "CURVE")
     keep_original = params.get("keep_original", True)
 
