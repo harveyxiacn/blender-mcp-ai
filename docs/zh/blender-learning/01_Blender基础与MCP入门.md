@@ -27,7 +27,7 @@ Blender 5.0 带来了更强大的渲染引擎（Cycles/Eevee）、更智能的�
 MCP（Model Context Protocol）是一种开放协议，它允许 AI 模型（如 Claude, GPT）安全地访问本地工具和数据。
 
 ### AI 控制架构
-在 `blender-mcp` 项目中，架构如下：
+在 `blender-mcp-ai` 项目中，架构如下：
 1. **用户**：向 AI 发出自然语言指令（例如：“创建一个红色的立方体”）。
 2. **AI (LLM)**：理解指令，并决定调用哪个 MCP 工具。
 3. **MCP Server**：接收 AI 的请求，并将其转化为 Blender 能够理解的 Python 代码。
@@ -41,7 +41,7 @@ MCP（Model Context Protocol）是一种开放协议，它允许 AI 模型（如
 
 ### 准备工作
 1. 确保已安装 **Blender 5.0**。
-2. 启动 `blender-mcp` 服务（请参考项目根目录的安装指南）。
+2. 启动 `blender-mcp-ai` 服务（请参考项目根目录的安装指南）。
 
 ### 连接测试
 你可以尝试向 AI 发送以下指令来检查连接是否正常：

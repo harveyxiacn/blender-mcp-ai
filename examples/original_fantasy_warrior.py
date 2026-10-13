@@ -292,7 +292,7 @@ for obj in bpy.data.objects:
             char_col.objects.link(obj)
 
 # Save
-output_path = r"E:\Projects\blender-mcp\examples\fantasy_warrior_3a.blend"
+output_path = r"E:\Projects\blender-mcp-ai\examples\fantasy_warrior_3a.blend"
 bpy.ops.wm.save_mainfile(filepath=output_path)
 
 print("\n✓ 3A Fantasy Warrior Complete!")

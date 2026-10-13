@@ -1,4 +1,4 @@
-"""Basic smoke tests for blender-mcp core modules."""
+"""Basic smoke tests for Blender MCP AI core modules."""
 
 from unittest.mock import patch
 

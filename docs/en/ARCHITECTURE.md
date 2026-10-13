@@ -5,7 +5,7 @@
 As of 2026-03-10, the repository contains:
 
 - 51 server-side tool modules in `src/blender_mcp/tools`
-- 359 total `@mcp.tool(...)` registrations in source
+- 380 total `@mcp.tool(...)` registrations in source
 - 12 skill groups in `skill_manager.py`
 - 6 loading profiles in `tools_config.py`
 
@@ -67,7 +67,7 @@ The current profile counts come from a static scan of tool decorators:
 | `extended` | 27 | 194 | Adds physics and batch workflows |
 | `full` | 50 | 356 | All user-facing modules |
 
-The codebase has 359 total tools if you count the 3 skill meta-tools separately.
+The codebase has 380 total tools if you count the 3 skill meta-tools separately.
 
 ## Skill Inventory
 

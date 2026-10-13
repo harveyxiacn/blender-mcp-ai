@@ -20,7 +20,7 @@ Welcome to the Blender MCP documentation. All documents are available in [Englis
 
 ## Quick Links
 
-- [GitHub Repository](https://github.com/harveyxiacn/blender-mcp)
-- [Issue Tracker](https://github.com/harveyxiacn/blender-mcp/issues)
+- [GitHub Repository](https://github.com/harveyxiacn/blender-mcp-ai)
+- [Issue Tracker](https://github.com/harveyxiacn/blender-mcp-ai/issues)
 - [Blender Website](https://www.blender.org/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)

@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "blender-mcp"
+name = "blender-mcp-ai"
 version = "0.3.1"
-description = "MCP server for controlling Blender with AI — 359 tools across modeling, animation, rendering, and more"
+description = "MCP server for controlling Blender with AI — 380 tools across modeling, animation, rendering, and more"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -48,14 +48,14 @@ dev = [
 ]
 
 [project.scripts]
-blender-mcp = "blender_mcp.__main__:main"
+blender-mcp-ai = "blender_mcp.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/harveyxiacn/blender-mcp"
-Documentation = "https://github.com/harveyxiacn/blender-mcp/tree/main/docs/en"
-Repository = "https://github.com/harveyxiacn/blender-mcp"
-Issues = "https://github.com/harveyxiacn/blender-mcp/issues"
-Changelog = "https://github.com/harveyxiacn/blender-mcp/blob/main/docs/en/CHANGELOG.md"
+Homepage = "https://github.com/harveyxiacn/blender-mcp-ai"
+Documentation = "https://github.com/harveyxiacn/blender-mcp-ai/tree/main/docs/en"
+Repository = "https://github.com/harveyxiacn/blender-mcp-ai"
+Issues = "https://github.com/harveyxiacn/blender-mcp-ai/issues"
+Changelog = "https://github.com/harveyxiacn/blender-mcp-ai/blob/main/docs/en/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["src"]

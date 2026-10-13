@@ -432,7 +432,7 @@ blender_mcp_addon/
 // antigravity-mcp.json
 {
   "servers": {
-    "blender-mcp": {
+    "blender-mcp-ai": {
       "type": "stdio",
       "command": "python -m blender_mcp"
     }

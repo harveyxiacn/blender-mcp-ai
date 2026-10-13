@@ -90,7 +90,7 @@ def build_payload(tag: str, en: str, zh: str, release_url: str) -> dict[str, obj
             {"title": "📦 Release", "description": f"See {release_url}", "color": BLENDER_ORANGE}
         )
     return {
-        "content": f"🎉 **blender-mcp {tag}** released — {release_url}",
+        "content": f"🎉 **Blender MCP AI {tag}** released — {release_url}",
         "embeds": embeds,
         "allowed_mentions": {"parse": []},
     }
@@ -105,7 +105,7 @@ def post(webhook: str, payload: dict[str, object]) -> None:
             "Content-Type": "application/json",
             # Discord is behind Cloudflare, which 403s (error 1010) the default
             # "Python-urllib" agent — a real User-Agent is required.
-            "User-Agent": "blender-mcp-changelog/1.0 (+https://github.com/harveyxiacn/blender-mcp)",
+            "User-Agent": "blender-mcp-ai-changelog/1.0 (+https://github.com/harveyxiacn/blender-mcp-ai)",
         },
         method="POST",
     )

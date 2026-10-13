@@ -20,7 +20,7 @@
 
 ## 快捷链接
 
-- [GitHub 仓库](https://github.com/harveyxiacn/blender-mcp)
-- [问题追踪](https://github.com/harveyxiacn/blender-mcp/issues)
+- [GitHub 仓库](https://github.com/harveyxiacn/blender-mcp-ai)
+- [问题追踪](https://github.com/harveyxiacn/blender-mcp-ai/issues)
 - [Blender 官网](https://www.blender.org/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)

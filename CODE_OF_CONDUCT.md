@@ -40,7 +40,7 @@ an individual is officially representing the community in public spaces.
 ## Enforcement
 
 Instances of unacceptable behavior may be reported to the project maintainers
-via [GitHub Issues](https://github.com/harveyxiacn/blender-mcp/issues) or by
+via [GitHub Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues) or by
 contacting the maintainers directly.
 
 All complaints will be reviewed and investigated promptly and fairly. All

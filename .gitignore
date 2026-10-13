@@ -108,6 +108,9 @@ examples/**/*.png
 examples/**/*.jpg
 examples/**/*.jpeg
 examples/**/*.webp
+# ...but track the renders used in the README gallery
+!examples/fantasy_warrior_render.png
+!examples/aria_hero.png
 
 # --- Local Modeling Notes (not part of released docs) ---
 docs/blender_5.0_official_manual_reference.md
@@ -125,3 +128,6 @@ coverage.xml
 # Drives this server to build the AmblyopiaTreatment 6.5 model set; contains
 # absolute paths to that private project + preview renders. Kept local.
 amblyopia_build/
+
+# --- Local scratch (ad-hoc repro scripts, render iterations, backups) ---
+.scratch/

@@ -45,7 +45,7 @@ def _get_pid_file() -> Path:
 
 
 def _cleanup_zombie_processes() -> int:
-    """Clean up leftover blender-mcp zombie processes
+    """Clean up leftover blender-mcp-ai zombie processes
 
     Returns:
         Number of processes cleaned up
@@ -69,7 +69,7 @@ def _cleanup_zombie_processes() -> int:
         with contextlib.suppress(OSError):
             pid_file.unlink()
 
-    # Method 2: Scan all Python processes to find blender-mcp related ones
+    # Method 2: Scan all Python processes to find blender-mcp-ai related ones
     if sys.platform == "win32":
         killed += _cleanup_windows(current_pid)
     else:
@@ -79,7 +79,7 @@ def _cleanup_zombie_processes() -> int:
 
 
 def _is_blender_mcp_process(pid: int) -> bool:
-    """Check if the specified PID is a blender-mcp process"""
+    """Check if the specified PID is a blender-mcp-ai process"""
     try:
         if sys.platform == "win32":
             import subprocess
@@ -90,13 +90,13 @@ def _is_blender_mcp_process(pid: int) -> bool:
                 text=True,
                 timeout=5,
             )
-            return "blender-mcp" in result.stdout or "blender_mcp" in result.stdout
+            return "blender-mcp-ai" in result.stdout or "blender_mcp" in result.stdout
         else:
             cmdline_path = f"/proc/{pid}/cmdline"
             if os.path.exists(cmdline_path):
                 with open(cmdline_path) as f:
                     cmdline = f.read()
-                return "blender-mcp" in cmdline or "blender_mcp" in cmdline
+                return "blender-mcp-ai" in cmdline or "blender_mcp" in cmdline
     except Exception:
         pass
     return False
@@ -142,7 +142,7 @@ def _cleanup_windows(current_pid: int) -> int:
             if (
                 pid
                 and pid != current_pid
-                and ("blender-mcp" in cmdline or "blender_mcp" in cmdline)
+                and ("blender-mcp-ai" in cmdline or "blender_mcp" in cmdline)
             ):
                 try:
                     os.kill(pid, signal.SIGTERM)
@@ -229,7 +229,7 @@ def setup_logging(level: str) -> None:
     type=click.Choice(["DEBUG", "INFO", "WARNING", "ERROR"]),
     help="Log level",
 )
-@click.version_option(version=__version__, prog_name="blender-mcp")
+@click.version_option(version=__version__, prog_name="blender-mcp-ai")
 @click.pass_context
 def main(
     ctx: click.Context, host: str, port: int, transport: str, http_port: int, log_level: str

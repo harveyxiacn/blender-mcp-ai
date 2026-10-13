@@ -33,7 +33,7 @@
 
 ## 执行
 
-不可接受行为的举报可通过 [GitHub Issues](https://github.com/harveyxiacn/blender-mcp/issues) 或直接联系维护者提交。
+不可接受行为的举报可通过 [GitHub Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues) 或直接联系维护者提交。
 
 所有投诉将被及时、公正地审查和调查。
 

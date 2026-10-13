@@ -97,7 +97,12 @@ class MCPServer:
 
     def _handle_client(self, client_socket: socket.socket, address) -> None:
         """Handle a client connection"""
-        buffer = ""
+        # Buffer raw bytes and decode only complete, newline-delimited lines.
+        # recv() returns arbitrary chunks that may split a multi-byte UTF-8
+        # character across two reads; decoding each chunk as it arrived raised
+        # UnicodeDecodeError mid-message, which the handler below swallowed
+        # into a silent disconnect before the code ever ran (issue #2).
+        buffer = b""
 
         try:
             while self.running:
@@ -106,21 +111,43 @@ class MCPServer:
                     if not data:
                         break
 
-                    buffer += data.decode("utf-8")
+                    buffer += data
 
                     # Process complete JSON messages (delimited by newlines)
-                    while "\n" in buffer:
-                        line, buffer = buffer.split("\n", 1)
-                        if line.strip():
-                            response = self._process_message(line)
-                            response_json = json.dumps(response) + "\n"
-                            client_socket.send(response_json.encode("utf-8"))
+                    while b"\n" in buffer:
+                        raw_line, buffer = buffer.split(b"\n", 1)
+                        if not raw_line.strip():
+                            continue
+
+                        # The line is complete, so its bytes hold whole UTF-8
+                        # sequences; "replace" only guards a malformed client.
+                        line = raw_line.decode("utf-8", errors="replace")
+                        response = self._process_message(line)
+                        response_json = json.dumps(response) + "\n"
+
+                        # sendall, not send: send() may write only part of a
+                        # large reply, which would desync the newline framing.
+                        client_socket.sendall(response_json.encode("utf-8"))
 
                 except TimeoutError:
                     continue
                 except Exception as e:
                     print(f"[MCP] Error processing message: {e}")
                     traceback.print_exc()
+                    # Report the fault instead of dropping the socket silently,
+                    # so protocol-level errors are diagnosable from the client.
+                    with contextlib.suppress(Exception):
+                        error_json = (
+                            json.dumps(
+                                {
+                                    "id": "unknown",
+                                    "success": False,
+                                    "error": {"code": "PROTOCOL_ERROR", "message": str(e)},
+                                }
+                            )
+                            + "\n"
+                        )
+                        client_socket.sendall(error_json.encode("utf-8"))
                     break
 
         finally:

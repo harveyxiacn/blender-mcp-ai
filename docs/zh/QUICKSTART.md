@@ -4,7 +4,7 @@
 
 本指南按 2026-03-10 的仓库状态更新：
 
-- 服务端共 359 个工具、51 个工具模块
+- 服务端共 380 个工具、56 个工具模块
 - 默认 `skill` Profile 启动 32 个工具
 - 共 12 个 Skill 分组可按需激活
 
@@ -18,8 +18,8 @@
 ## 1. 从源码安装
 
 ```bash
-git clone https://github.com/harveyxiacn/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/harveyxiacn/blender-mcp-ai.git
+cd blender-mcp-ai
 uv sync
 ```
 
@@ -48,7 +48,7 @@ python build_addon.py
   "mcpServers": {
     "blender": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/blender-mcp", "blender-mcp"]
+      "args": ["run", "--directory", "/path/to/blender-mcp-ai", "blender-mcp-ai"]
     }
   }
 }
@@ -57,7 +57,7 @@ python build_addon.py
 ## 4. 启动服务器
 
 ```bash
-uv run blender-mcp
+uv run blender-mcp-ai
 ```
 
 ## 5. 第一次会话

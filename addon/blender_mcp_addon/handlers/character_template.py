@@ -20,6 +20,7 @@ TEMPLATE_CONFIG = {
         "head_body_ratio": 2.5,
         "eye_size": 1.5,
         "limb_thickness": 0.15,
+        "leg_frac": 0.36,
     },
     "realistic": {
         "head_scale": [0.5, 0.5, 0.6],
@@ -27,6 +28,7 @@ TEMPLATE_CONFIG = {
         "head_body_ratio": 7.5,
         "eye_size": 0.8,
         "limb_thickness": 0.12,
+        "leg_frac": 0.48,
     },
     "anime": {
         "head_scale": [0.7, 0.7, 0.8],
@@ -34,6 +36,7 @@ TEMPLATE_CONFIG = {
         "head_body_ratio": 5.5,
         "eye_size": 1.3,
         "limb_thickness": 0.1,
+        "leg_frac": 0.46,
     },
     "stylized": {
         "head_scale": [0.8, 0.8, 0.9],
@@ -41,6 +44,7 @@ TEMPLATE_CONFIG = {
         "head_body_ratio": 4.0,
         "eye_size": 1.2,
         "limb_thickness": 0.12,
+        "leg_frac": 0.43,
     },
     "mascot": {
         "head_scale": [1.2, 1.2, 1.3],
@@ -48,6 +52,7 @@ TEMPLATE_CONFIG = {
         "head_body_ratio": 2.0,
         "eye_size": 1.8,
         "limb_thickness": 0.2,
+        "leg_frac": 0.32,
     },
 }
 
@@ -91,6 +96,51 @@ def _assign_material(obj, material) -> None:
         obj.data.materials.append(material)
 
 
+def _character_layout(
+    height: float, config: dict[str, Any], location: list[float]
+) -> dict[str, float]:
+    """Derive one coherent vertical skeleton from the requested height.
+
+    Every part is placed from these numbers, so the head, neck, torso, hips and
+    legs always meet exactly. Previously each part used its own magic offset,
+    which left the head floating 0.22 m above the torso.
+    """
+    z0 = location[2]
+
+    head_h = height / config["head_body_ratio"]
+    aspect_x = config["head_scale"][0] / config["head_scale"][2]
+    aspect_y = config["head_scale"][1] / config["head_scale"][2]
+    head_w = head_h * aspect_x
+    head_d = head_h * aspect_y
+
+    leg_len = height * config["leg_frac"]
+    hip_z = z0 + leg_len
+
+    head_center_z = z0 + height - head_h / 2
+    head_bottom_z = z0 + height - head_h
+
+    # A short neck bridges head and torso; both ends overlap it slightly.
+    neck_h = head_h * 0.22
+    shoulder_z = head_bottom_z - neck_h
+
+    torso_h = max(shoulder_z - hip_z, height * 0.08)
+
+    return {
+        "z0": z0,
+        "head_h": head_h,
+        "head_w": head_w,
+        "head_d": head_d,
+        "head_center_z": head_center_z,
+        "head_bottom_z": head_bottom_z,
+        "neck_h": neck_h,
+        "shoulder_z": shoulder_z,
+        "hip_z": hip_z,
+        "leg_len": leg_len,
+        "torso_h": torso_h,
+        "torso_center_z": hip_z + torso_h / 2,
+    }
+
+
 def handle_create(params: dict[str, Any]) -> dict[str, Any]:
     """Create character from template"""
     template = params.get("template", "chibi")
@@ -98,12 +148,13 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
     height = params.get("height", 1.7)
     location = params.get("location", [0, 0, 0])
     skin_color = params.get("skin_color") or SKIN_COLORS["light"]
-    params.get("gender", "neutral")
 
     config = TEMPLATE_CONFIG.get(template, TEMPLATE_CONFIG["chibi"])
 
-    # Calculate scale factor
+    # Scale factor for widths only; all vertical placement comes from _character_layout.
     scale_factor = height / 1.7
+    x0, y0 = location[0], location[1]
+    lay = _character_layout(height, config, location)
 
     created_parts = []
 
@@ -111,27 +162,32 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
     skin_mat = _create_material(f"{name}_Skin", skin_color, roughness=0.8)
 
     # ========== Head ==========
-    head_z = location[2] + height * (1 - 1 / config["head_body_ratio"])
-    bpy.ops.mesh.primitive_uv_sphere_add(
-        radius=0.25 * scale_factor * config["head_scale"][0],
-        location=[location[0], location[1], head_z],
-    )
+    # Unit sphere scaled into an ellipsoid: head_scale is applied exactly once.
+    bpy.ops.mesh.primitive_uv_sphere_add(radius=1.0, location=[x0, y0, lay["head_center_z"]])
     head = bpy.context.active_object
     head.name = f"{name}_Head"
-    head.scale = [config["head_scale"][0], config["head_scale"][1], config["head_scale"][2]]
+    head.scale = [lay["head_w"] / 2, lay["head_d"] / 2, lay["head_h"] / 2]
     _assign_material(head, skin_mat)
     created_parts.append(head.name)
 
+    # ========== Neck ==========
+    bpy.ops.mesh.primitive_cylinder_add(
+        radius=config["limb_thickness"] * scale_factor * 0.35,
+        depth=lay["neck_h"] * 1.8,  # overlaps head and torso so nothing gaps
+        location=[x0, y0, (lay["head_bottom_z"] + lay["shoulder_z"]) / 2],
+    )
+    neck = bpy.context.active_object
+    neck.name = f"{name}_Neck"
+    _assign_material(neck, skin_mat)
+    created_parts.append(neck.name)
+
     # ========== Body ==========
-    body_z = location[2] + height * 0.4
-    bpy.ops.mesh.primitive_cube_add(location=[location[0], location[1], body_z])
+    torso_half_w = config["body_scale"][0] * scale_factor * 0.30
+    torso_half_d = config["body_scale"][1] * scale_factor * 0.20
+    bpy.ops.mesh.primitive_cube_add(location=[x0, y0, lay["torso_center_z"]])
     body = bpy.context.active_object
     body.name = f"{name}_Body"
-    body.scale = [
-        config["body_scale"][0] * scale_factor * 0.3,
-        config["body_scale"][1] * scale_factor * 0.2,
-        config["body_scale"][2] * scale_factor * 0.35,
-    ]
+    body.scale = [torso_half_w, torso_half_d, lay["torso_h"] / 2]
     _assign_material(body, skin_mat)
     created_parts.append(body.name)
 
@@ -141,29 +197,35 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
         f"{name}_EyeHighlight", [1.0, 1.0, 1.0, 1.0], roughness=0.2
     )
 
-    eye_size = 0.05 * scale_factor * config["eye_size"]
-    eye_spacing = 0.08 * scale_factor
-    eye_y = -0.15 * scale_factor
-    eye_z = head_z + 0.02 * scale_factor
+    # Sized and placed relative to the head ellipsoid, so eyes always sit on
+    # the face instead of piercing through it at a fixed offset.
+    eye_size = lay["head_w"] * 0.11 * config["eye_size"]
+    eye_x = lay["head_w"] * 0.22
+    eye_z = lay["head_center_z"] - lay["head_h"] * 0.05
+    rx, ry = lay["head_w"] / 2, lay["head_d"] / 2
 
-    for side, x_offset in [("L", -eye_spacing), ("R", eye_spacing)]:
-        # Eyeball
+    for side, sign in (("L", -1.0), ("R", 1.0)):
+        # Project onto the ellipsoid's surface at this eye's own x, so the
+        # eyeball sits flush on the face for any head shape.
+        t = min(1.0, eye_x / rx) if rx > 0 else 0.0
+        surface_y = y0 - ry * math.sqrt(max(0.0, 1.0 - t * t))
+
         bpy.ops.mesh.primitive_uv_sphere_add(
-            radius=eye_size, location=[location[0] + x_offset, location[1] + eye_y, eye_z]
+            radius=eye_size, location=[x0 + sign * eye_x, surface_y, eye_z]
         )
         eye = bpy.context.active_object
         eye.name = f"{name}_Eye_{side}"
-        eye.scale = [1.0, 0.7, 1.0]
+        eye.scale = [1.0, 0.65, 1.0]
         _assign_material(eye, eye_mat)
         created_parts.append(eye.name)
 
         # Highlight
         bpy.ops.mesh.primitive_uv_sphere_add(
-            radius=eye_size * 0.25,
+            radius=eye_size * 0.28,
             location=[
-                location[0] + x_offset + eye_size * 0.3,
-                location[1] + eye_y - eye_size * 0.3,
-                eye_z + eye_size * 0.3,
+                x0 + sign * eye_x + sign * eye_size * 0.30,
+                surface_y - eye_size * 0.45,
+                eye_z + eye_size * 0.40,
             ],
         )
         highlight = bpy.context.active_object
@@ -172,30 +234,41 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
         created_parts.append(highlight.name)
 
     # ========== Arms ==========
-    arm_mat = skin_mat
-    arm_length = height * 0.25
-    arm_y = body_z
+    # Hung from the shoulder just outside the torso: previously they ran down
+    # the body's centre line, burying them inside the chest.
+    arm_length = height * 0.26
+    arm_radius = config["limb_thickness"] * scale_factor * 0.5
+    spread = 0.14  # slight A-pose
 
-    for side, x_offset, rotation in [
-        ("L", -0.2 * scale_factor, 0.3),
-        ("R", 0.2 * scale_factor, -0.3),
-    ]:
+    for side, sign in (("L", -1.0), ("R", 1.0)):
+        shoulder_x = x0 + sign * (torso_half_w + arm_radius * 0.6)
+        # Unit direction the arm hangs in, tilting outward on the way down.
+        dir_x = sign * math.sin(spread)
+        dir_z = -math.cos(spread)
+
         bpy.ops.mesh.primitive_cylinder_add(
-            radius=config["limb_thickness"] * scale_factor * 0.5,
+            radius=arm_radius,
             depth=arm_length,
-            location=[location[0] + x_offset, location[1], arm_y],
+            location=[
+                shoulder_x + dir_x * arm_length / 2,
+                y0,
+                lay["shoulder_z"] + dir_z * arm_length / 2,
+            ],
         )
         arm = bpy.context.active_object
         arm.name = f"{name}_Arm_{side}"
-        arm.rotation_euler = [0, rotation, 0]
-        _assign_material(arm, arm_mat)
+        arm.rotation_euler = [0, -sign * spread, 0]
+        _assign_material(arm, skin_mat)
         created_parts.append(arm.name)
 
-        # Hand
-        hand_x = location[0] + x_offset + (0.15 if side == "R" else -0.15) * scale_factor
+        # Hand, at the far end of the arm
         bpy.ops.mesh.primitive_uv_sphere_add(
-            radius=config["limb_thickness"] * scale_factor * 0.6,
-            location=[hand_x, location[1], arm_y - arm_length * 0.3],
+            radius=arm_radius * 1.15,
+            location=[
+                shoulder_x + dir_x * arm_length,
+                y0,
+                lay["shoulder_z"] + dir_z * arm_length,
+            ],
         )
         hand = bpy.context.active_object
         hand.name = f"{name}_Hand_{side}"
@@ -203,31 +276,28 @@ def handle_create(params: dict[str, Any]) -> dict[str, Any]:
         created_parts.append(hand.name)
 
     # ========== Legs ==========
-    leg_length = height * 0.3
-    leg_z = location[2] + leg_length * 0.5
+    leg_radius = config["limb_thickness"] * scale_factor * 0.6
+    leg_x = torso_half_w * 0.45
+    foot_h = height * 0.025
 
-    for side, x_offset in [("L", -0.08 * scale_factor), ("R", 0.08 * scale_factor)]:
+    for side, sign in (("L", -1.0), ("R", 1.0)):
         bpy.ops.mesh.primitive_cylinder_add(
-            radius=config["limb_thickness"] * scale_factor * 0.6,
-            depth=leg_length,
-            location=[location[0] + x_offset, location[1], leg_z],
+            radius=leg_radius,
+            depth=lay["leg_len"],
+            location=[x0 + sign * leg_x, y0, lay["z0"] + lay["leg_len"] / 2],
         )
         leg = bpy.context.active_object
         leg.name = f"{name}_Leg_{side}"
         _assign_material(leg, skin_mat)
         created_parts.append(leg.name)
 
-        # Foot
+        # Foot, resting on the ground plane and pointing forward (-Y)
         bpy.ops.mesh.primitive_cube_add(
-            location=[
-                location[0] + x_offset,
-                location[1] - 0.03 * scale_factor,
-                location[2] + 0.03 * scale_factor,
-            ]
+            location=[x0 + sign * leg_x, y0 - height * 0.03, lay["z0"] + foot_h / 2]
         )
         foot = bpy.context.active_object
         foot.name = f"{name}_Foot_{side}"
-        foot.scale = [0.05 * scale_factor, 0.08 * scale_factor, 0.03 * scale_factor]
+        foot.scale = [leg_radius * 1.15, height * 0.055, foot_h / 2]
         _assign_material(foot, skin_mat)
         created_parts.append(foot.name)
 
@@ -368,37 +438,40 @@ def handle_hair_create(params: dict[str, Any]) -> dict[str, Any]:
 
     hair_mat = _create_material(f"{character_name}_Hair", color, roughness=0.7)
 
-    hair_z = head.location.z + head.dimensions[2] * 0.3
+    # Sit the hair as a cap over the crown, nudged back so it clears the face.
+    hair_r = head.dimensions[0] * 0.58 * volume
+    hair_z = head.location.z + head.dimensions[2] * 0.16
+    hair_y = head.location[1] + head.dimensions[1] * 0.06
 
     if hair_style == "short":
         bpy.ops.mesh.primitive_uv_sphere_add(
-            radius=head.dimensions[0] * 0.55 * volume,
-            location=[head.location[0], head.location[1], hair_z],
+            radius=hair_r,
+            location=[head.location[0], hair_y, hair_z],
         )
         hair = bpy.context.active_object
         hair.name = f"{character_name}_Hair"
-        hair.scale = [1.0, 1.0, 0.6]
+        hair.scale = [1.0, 1.0, 0.72]
         _assign_material(hair, hair_mat)
 
     elif hair_style == "medium":
         bpy.ops.mesh.primitive_uv_sphere_add(
-            radius=head.dimensions[0] * 0.58 * volume,
-            location=[head.location[0], head.location[1], hair_z],
+            radius=hair_r,
+            location=[head.location[0], hair_y, hair_z],
         )
         hair = bpy.context.active_object
         hair.name = f"{character_name}_Hair"
-        hair.scale = [1.0, 1.1, 0.8]
+        hair.scale = [1.0, 1.08, 0.85]
         _assign_material(hair, hair_mat)
 
     elif hair_style == "long":
         # Top of head
         bpy.ops.mesh.primitive_uv_sphere_add(
-            radius=head.dimensions[0] * 0.55 * volume,
-            location=[head.location[0], head.location[1], hair_z],
+            radius=hair_r,
+            location=[head.location[0], hair_y, hair_z],
         )
         hair_top = bpy.context.active_object
         hair_top.name = f"{character_name}_Hair_Top"
-        hair_top.scale = [1.0, 1.0, 0.6]
+        hair_top.scale = [1.0, 1.0, 0.72]
         _assign_material(hair_top, hair_mat)
 
         # Long hair at the back
@@ -418,12 +491,12 @@ def handle_hair_create(params: dict[str, Any]) -> dict[str, Any]:
     elif hair_style == "ponytail":
         # Top of head
         bpy.ops.mesh.primitive_uv_sphere_add(
-            radius=head.dimensions[0] * 0.55 * volume,
-            location=[head.location[0], head.location[1], hair_z],
+            radius=hair_r,
+            location=[head.location[0], hair_y, hair_z],
         )
         hair_top = bpy.context.active_object
         hair_top.name = f"{character_name}_Hair_Top"
-        hair_top.scale = [1.0, 1.0, 0.6]
+        hair_top.scale = [1.0, 1.0, 0.72]
         _assign_material(hair_top, hair_mat)
 
         # Ponytail
@@ -578,18 +651,26 @@ def handle_accessory_add(params: dict[str, Any]) -> dict[str, Any]:
         _assign_material(ribbon, ribbon_mat)
 
     elif accessory_type == "necklace" and body:
+        # Sit the ring around the base of the neck. Blender's torus already lies
+        # flat in XY, which is how a necklace sits - the previous 90-degree X
+        # rotation stood it up into a vertical hoop hanging in mid-air.
+        neck = bpy.data.objects.get(f"{character_name}_Neck")
+        if neck:
+            ring_r = max(neck.dimensions[0], 1e-4) * 0.9
+            ring_z = neck.location.z - neck.dimensions[2] * 0.30
+        else:
+            ring_r = body.dimensions[0] * 0.22
+            ring_z = body.location.z + body.dimensions[2] * 0.5
+
         bpy.ops.mesh.primitive_torus_add(
-            major_radius=body.dimensions[0] * 0.4,
-            minor_radius=0.005,
-            location=[
-                body.location[0],
-                body.location[1],
-                body.location[2] + body.dimensions[2] * 0.45,
-            ],
+            major_radius=ring_r,
+            minor_radius=ring_r * 0.16,
+            location=[body.location[0], body.location[1], ring_z],
         )
         necklace = bpy.context.active_object
         necklace.name = f"{character_name}_Necklace"
-        necklace.rotation_euler = [1.57, 0, 0]
+        # Follow the torso's depth so the ring hugs the body, not a circle.
+        necklace.scale = [1.0, body.dimensions[1] / max(body.dimensions[0], 1e-6), 1.0]
         _assign_material(necklace, accessory_mat)
 
     return {"success": True, "data": {"accessory_type": accessory_type}}

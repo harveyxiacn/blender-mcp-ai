@@ -10,7 +10,7 @@ Usage:
 
 Requirements:
     - Blender running with MCP addon enabled (port 9876)
-    - `uv run` or activated venv with blender-mcp installed
+    - `uv run` or activated venv with blender-mcp-ai installed
 """
 
 from __future__ import annotations

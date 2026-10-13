@@ -11,8 +11,8 @@
 ## 1. Clone And Sync
 
 ```bash
-git clone https://github.com/harveyxiacn/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/harveyxiacn/blender-mcp-ai.git
+cd blender-mcp-ai
 uv sync
 ```
 
@@ -44,7 +44,7 @@ python build_addon.py
 Optional auto-install command after the environment is ready:
 
 ```bash
-uv run blender-mcp install-addon
+uv run blender-mcp-ai install-addon
 ```
 
 Manual Blender steps:
@@ -64,7 +64,7 @@ Example `mcp.json`:
   "mcpServers": {
     "blender": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/blender-mcp", "blender-mcp"]
+      "args": ["run", "--directory", "/path/to/blender-mcp-ai", "blender-mcp-ai"]
     }
   }
 }
@@ -83,21 +83,21 @@ Current profile sizes are based on the 2026-03-10 code audit:
 | `extended` | 27 | 194 | Adds physics and batch modules |
 | `full` | 50 | 356 | All user-facing modules |
 
-The repository contains 359 total tools if you include the 3 skill meta-tools.
+The repository contains 380 total tools if you include the 3 skill meta-tools.
 
 ## 6. Verify
 
 Basic checks:
 
 ```bash
-uv run blender-mcp --version
-uv run blender-mcp
+uv run blender-mcp-ai --version
+uv run blender-mcp-ai
 ```
 
 Connection check with Blender open and the addon enabled:
 
 ```bash
-uv run blender-mcp check
+uv run blender-mcp-ai check
 ```
 
 ## 7. Troubleshooting

@@ -14,7 +14,7 @@
 
 **首选方式：**
 
-1. **GitHub 安全公告** — 在 [https://github.com/harveyxiacn/blender-mcp/security/advisories/new](https://github.com/harveyxiacn/blender-mcp/security/advisories/new) 提交私密公告。
+1. **GitHub 安全公告** — 在 [https://github.com/harveyxiacn/blender-mcp-ai/security/advisories/new](https://github.com/harveyxiacn/blender-mcp-ai/security/advisories/new) 提交私密公告。
 2. **邮件** — 直接联系项目维护者，请在主题中注明"SECURITY"。
 
 **请勿**为安全漏洞创建公开的 GitHub Issue。

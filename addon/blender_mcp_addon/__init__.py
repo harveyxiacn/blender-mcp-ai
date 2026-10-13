@@ -12,8 +12,8 @@ bl_info = {
     "location": "View3D > Sidebar > MCP",
     "description": "Enable AI assistants to control Blender through MCP protocol",
     "category": "Interface",
-    "doc_url": "https://github.com/harveyxiacn/blender-mcp",
-    "tracker_url": "https://github.com/harveyxiacn/blender-mcp/issues",
+    "doc_url": "https://github.com/harveyxiacn/blender-mcp-ai",
+    "tracker_url": "https://github.com/harveyxiacn/blender-mcp-ai/issues",
 }
 
 import importlib

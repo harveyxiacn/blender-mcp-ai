@@ -11,8 +11,8 @@
 ### 1. Fork & Clone
 
 ```bash
-git clone https://github.com/harveyxiacn/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/harveyxiacn/blender-mcp-ai.git
+cd blender-mcp-ai
 ```
 
 ### 2. 开发环境设置
@@ -56,7 +56,7 @@ addon/blender_mcp_addon/  # Blender 插件
 
 ### 报告 Bug
 
-1. 检查现有 [Issues](https://github.com/harveyxiacn/blender-mcp/issues)
+1. 检查现有 [Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues)
 2. 创建新 Issue，包含：
    - Blender 版本
    - Python 版本

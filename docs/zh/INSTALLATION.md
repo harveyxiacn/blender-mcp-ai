@@ -11,8 +11,8 @@
 ## 1. 克隆并同步环境
 
 ```bash
-git clone https://github.com/harveyxiacn/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/harveyxiacn/blender-mcp-ai.git
+cd blender-mcp-ai
 uv sync
 ```
 
@@ -44,7 +44,7 @@ python build_addon.py
 环境准备好后，也可以尝试自动安装：
 
 ```bash
-uv run blender-mcp install-addon
+uv run blender-mcp-ai install-addon
 ```
 
 手动安装步骤：
@@ -64,7 +64,7 @@ uv run blender-mcp install-addon
   "mcpServers": {
     "blender": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/blender-mcp", "blender-mcp"]
+      "args": ["run", "--directory", "/path/to/blender-mcp-ai", "blender-mcp-ai"]
     }
   }
 }
@@ -83,21 +83,21 @@ uv run blender-mcp install-addon
 | `extended` | 27 | 194 | 加入物理与批处理 |
 | `full` | 50 | 356 | 全部用户可见模块 |
 
-如果把 3 个 Skill 元工具一起算入，仓库总计是 359 个工具。
+如果把 3 个 Skill 元工具一起算入，仓库总计是 380 个工具。
 
 ## 6. 验证安装
 
 基础检查：
 
 ```bash
-uv run blender-mcp --version
-uv run blender-mcp
+uv run blender-mcp-ai --version
+uv run blender-mcp-ai
 ```
 
 在 Blender 已启动、插件已启用的情况下检查连接：
 
 ```bash
-uv run blender-mcp check
+uv run blender-mcp-ai check
 ```
 
 ## 7. 故障排查

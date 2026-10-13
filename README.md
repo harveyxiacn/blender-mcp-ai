@@ -1,17 +1,20 @@
+<h1 align="center">Blender MCP AI</h1>
+
 <p align="center">
-  <img src="docs/assets/logo.jpg" alt="Blender MCP Logo" width="480">
+  <img src="docs/assets/logo.jpg" alt="Blender MCP AI logo" width="480">
 </p>
 <p align="center">
   <strong>Control Blender with AI through the Model Context Protocol</strong>
 </p>
 
 <p align="center">
-  <a href="https://github.com/harveyxiacn/blender-mcp/actions"><img src="https://github.com/harveyxiacn/blender-mcp/workflows/CI/badge.svg" alt="CI"></a>
-  <a href="https://pypi.org/project/blender-mcp/"><img src="https://img.shields.io/pypi/v/blender-mcp.svg" alt="PyPI"></a>
-  <a href="https://pypi.org/project/blender-mcp/"><img src="https://img.shields.io/pypi/pyversions/blender-mcp.svg" alt="Python"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/harveyxiacn/blender-mcp.svg" alt="License: MIT"></a>
-  <a href="https://github.com/harveyxiacn/blender-mcp/issues"><img src="https://img.shields.io/github/issues/harveyxiacn/blender-mcp.svg" alt="Issues"></a>
-  <a href="https://github.com/harveyxiacn/blender-mcp/discussions"><img src="https://img.shields.io/github/discussions/harveyxiacn/blender-mcp" alt="Discussions"></a>
+  <a href="https://github.com/harveyxiacn/blender-mcp-ai/actions"><img src="https://github.com/harveyxiacn/blender-mcp-ai/workflows/CI/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/blender-4.x%20%7C%205.x-orange" alt="Blender 4.x / 5.x">
+  <img src="https://img.shields.io/badge/tools-380-brightgreen" alt="380 tools">
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/harveyxiacn/blender-mcp-ai.svg" alt="License: MIT"></a>
+  <a href="https://github.com/harveyxiacn/blender-mcp-ai/issues"><img src="https://img.shields.io/github/issues/harveyxiacn/blender-mcp-ai.svg" alt="Issues"></a>
+  <a href="https://github.com/harveyxiacn/blender-mcp-ai/discussions"><img src="https://img.shields.io/github/discussions/harveyxiacn/blender-mcp-ai" alt="Discussions"></a>
   <a href="https://discord.gg/rurjWE45"><img src="https://img.shields.io/discord/1510824219498254456?logo=discord&logoColor=white&label=discord" alt="Discord"></a>
 </p>
 
@@ -20,15 +23,25 @@
   <a href="docs/en/ARCHITECTURE.md">Architecture</a> •
   <a href="docs/en/API_REFERENCE.md">API Reference</a> •
   <a href="docs/en/CONTRIBUTING.md">Contributing</a> •
-  <a href="https://github.com/harveyxiacn/blender-mcp/discussions">Discussions</a> •
+  <a href="https://github.com/harveyxiacn/blender-mcp-ai/discussions">Discussions</a> •
   <a href="#中文">中文</a>
 </p>
 
 ---
 
+> [!IMPORTANT]
+> **This project is not affiliated with any other Blender MCP project.**
+> It is an independent, original codebase — not a fork of, and sharing no code
+> with, anything else. In particular it is unrelated to
+> [`ahujasid/mcp-for-blender`](https://github.com/ahujasid/mcp-for-blender)
+> (formerly published on PyPI as `blender-mcp`). The `blender-mcp` package on
+> PyPI belongs to *that* project: installing it does **not** install this
+> software. Install this project by cloning this repository — see
+> [Quick Start](#quick-start).
+
 ## Overview
 
-Blender MCP is an open-source [Model Context Protocol](https://modelcontextprotocol.io/) server that lets AI assistants control [Blender](https://www.blender.org/) through natural language. It works with any MCP-compatible client — **Cursor**, **Windsurf**, **Claude Desktop**, and more.
+**Blender MCP AI** is an open-source [Model Context Protocol](https://modelcontextprotocol.io/) server that lets AI assistants control [Blender](https://www.blender.org/) through natural language. It works with any MCP-compatible client — **Cursor**, **Windsurf**, **Claude Desktop**, and more.
 
 The project consists of two components:
 - **MCP Server** (`src/blender_mcp/`) — a FastMCP server exposing Blender operations as MCP tools
@@ -46,21 +59,19 @@ Blender
 
 ## Gallery
 
-> All renders below were generated entirely through AI commands using Blender MCP — no manual Blender interaction.
+> Generated entirely through natural-language AI commands via Blender MCP AI — no manual Blender interaction.
 
-| Anime Character Trio | Fantasy Warrior |
-|:---:|:---:|
-| ![SAO Characters](examples/sao_kirito_asuna_rigged_preview.png) | ![Fantasy Warrior](examples/fantasy_warrior_render.png) |
+![Stylized character generated end-to-end by the agent through the MCP pipeline](examples/aria_hero.png)
 
-| Style Preview | Action Pose |
-|:---:|:---:|
-| ![Style Figure](examples/sao_style_figure_display.png) | ![Action](examples/sao_kirito_asuna_action_f24.png) |
+*A character built end-to-end by the agent — body template, hair, clothing and accessory — then lit and rendered at 1920×1080 through the MCP tools. It is a deliberately simple primitive-based blockout: the point is the round trip, not the polish.*
+
+The point of this project isn't the polish of any single render — it's the **agent ↔ Blender pipeline**: 380 tools, dynamic skill loading to keep the model's context lean, and viewport/render snapshots that let the model review its own work and iterate.
 
 ## Key Features
 
-- **359 MCP tools** across 51 modules — modeling, materials, animation, rendering, rigging, and more
-- **Smart skill loading** — default `skill` profile starts with 32 tools; 12 skill groups activate on demand to keep AI context lean
-- **6 profiles** — from `minimal` (29 tools) to `full` (356 tools)
+- **380 MCP tools** across 56 modules — modeling, materials, animation, rendering, rigging, and more
+- **Smart skill loading** — default `skill` profile starts with 38 tools; 12 skill groups activate on demand to keep AI context lean
+- **6 profiles** — from `minimal` (35 tools) to `full` (377 tools)
 - **Visual feedback** — `blender_snapshot_viewport` and `blender_snapshot_render_preview` for multimodal AI review loops
 - **Checkpoint system** — named save/restore points before risky operations
 - **Style system** — 8 rendering style presets from Pixel Art to AAA
@@ -75,28 +86,24 @@ Blender
 
 - **Python 3.10+**
 - **Blender 4.0+**
-- **[uv](https://docs.astral.sh/uv/)** (recommended) or pip
+- **[uv](https://docs.astral.sh/uv/)**
 - An MCP-compatible client
 
 ### Install & Run
 
+> There is no PyPI release yet. Install from source — `pip install blender-mcp`
+> would install an unrelated third-party package (see the notice at the top).
+
 ```bash
-git clone https://github.com/harveyxiacn/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/harveyxiacn/blender-mcp-ai.git
+cd blender-mcp-ai
 uv sync
 
 # Build the Blender addon
 python build_addon.py
 
 # Start the MCP server
-uv run blender-mcp
-```
-
-Or install from PyPI:
-
-```bash
-pip install blender-mcp
-blender-mcp
+uv run blender-mcp-ai
 ```
 
 ### Set Up Blender
@@ -115,7 +122,7 @@ Add to your MCP client config:
   "mcpServers": {
     "blender": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/blender-mcp", "blender-mcp"]
+      "args": ["run", "--directory", "/path/to/blender-mcp-ai", "blender-mcp-ai"]
     }
   }
 }
@@ -125,12 +132,12 @@ Add to your MCP client config:
 
 | Profile | Tools | Use Case |
 |---------|-------|----------|
-| `minimal` | 29 | Core scene/object/utility/export only |
-| `skill` | 32 | **Default** — core + on-demand skill loading |
-| `focused` | 108 | Curated workflow set |
-| `standard` | 165 | Broader daily-use coverage |
-| `extended` | 194 | Adds physics & batch operations |
-| `full` | 356 | Everything |
+| `minimal` | 35 | Core scene/object/utility/export only |
+| `skill` | 38 | **Default** — core + on-demand skill loading |
+| `focused` | 124 | Curated workflow set |
+| `standard` | 186 | Broader daily-use coverage |
+| `extended` | 215 | Adds physics & batch operations |
+| `full` | 377 | Everything |
 
 ## Skill System
 
@@ -165,8 +172,8 @@ All documentation is available in **English** and **中文 (Chinese)**.
 ## Community
 
 - **[Discord](https://discord.gg/rurjWE45)** — live chat, help, and show & tell
-- **[GitHub Discussions](https://github.com/harveyxiacn/blender-mcp/discussions)** — questions, ideas, long-form discussion
-- **[Issues](https://github.com/harveyxiacn/blender-mcp/issues)** — bug reports and feature requests
+- **[GitHub Discussions](https://github.com/harveyxiacn/blender-mcp-ai/discussions)** — questions, ideas, long-form discussion
+- **[Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues)** — bug reports and feature requests
 - **[Contributing Guide](docs/en/CONTRIBUTING.md)** — how to add tools, fix bugs, improve docs
 
 ## Contributing
@@ -195,23 +202,30 @@ For security concerns, please see [SECURITY.md](SECURITY.md). Do **not** open a 
 
 ## 中文
 
+> [!IMPORTANT]
+> **本项目与其他任何同名 Blender MCP 项目均无关联。**
+> 这是一套独立、原创的代码库，不是任何项目的 fork，也不共用任何代码。特别地，本项目与
+> [`ahujasid/mcp-for-blender`](https://github.com/ahujasid/mcp-for-blender)（其旧版在 PyPI 上
+> 叫 `blender-mcp`）毫无关系。PyPI 上的 `blender-mcp` 属于**那个**项目，安装它**不会**安装本软件。
+> 安装本项目请克隆本仓库，见[快速开始](#快速开始)。
+
 ### 概述
 
-Blender MCP 是一个开源的 [Model Context Protocol](https://modelcontextprotocol.io/) 服务器，让 AI 助手可以通过自然语言控制 [Blender](https://www.blender.org/)。支持 **Cursor**、**Windsurf**、**Claude Desktop** 等任意 MCP 兼容客户端。
+**Blender MCP AI** 是一个开源的 [Model Context Protocol](https://modelcontextprotocol.io/) 服务器，让 AI 助手可以通过自然语言控制 [Blender](https://www.blender.org/)。支持 **Cursor**、**Windsurf**、**Claude Desktop** 等任意 MCP 兼容客户端。
 
 ### 展示
 
-> 以下所有渲染结果完全通过 AI 命令生成，无需手动操作 Blender。
+> 以下渲染完全通过自然语言 AI 命令生成，无需手动操作 Blender。
 
-| 动漫角色三人组 | 奇幻战士 |
-|:---:|:---:|
-| ![SAO 角色](examples/sao_kirito_asuna_rigged_preview.png) | ![奇幻战士](examples/fantasy_warrior_render.png) |
+![由 AI 通过 MCP 管线端到端生成的风格化角色](examples/aria_hero.png)
+
+*一个由智能体端到端生成的角色 —— 体型模板、头发、服装、配饰全部由 MCP 工具创建，再经打光与 1920×1080 渲染。它是刻意简化的图元搭建，重点在完整回路，而非精细度。* 本项目的价值不在单张渲染的精细度，而在 **agent ↔ Blender 管线**：380 个工具、动态技能加载以精简上下文、以及让模型自审自迭代的视口/渲染截图。
 
 ### 核心特性
 
-- **359 个 MCP 工具**，覆盖建模、材质、动画、渲染等全流程
-- **智能工具加载** — 默认 `skill` 配置仅加载 32 个工具，12 个技能组按需激活
-- **6 种配置方案** — 从 `minimal`（29 个工具）到 `full`（356 个工具）
+- **380 个 MCP 工具**，覆盖建模、材质、动画、渲染等全流程
+- **智能工具加载** — 默认 `skill` 配置仅加载 38 个工具，12 个技能组按需激活
+- **6 种配置方案** — 从 `minimal`（35 个工具）到 `full`（377 个工具）
 - **视觉反馈** — 视口截图 + 渲染预览，支持多模态 AI 审查循环
 - **检查点系统** — 高风险操作前的命名存档/还原点
 - **风格系统** — 8 种渲染风格预设（像素风到 3A 级）
@@ -222,23 +236,19 @@ Blender MCP 是一个开源的 [Model Context Protocol](https://modelcontextprot
 ### 快速开始
 
 ```bash
-git clone https://github.com/harveyxiacn/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/harveyxiacn/blender-mcp-ai.git
+cd blender-mcp-ai
 uv sync
 
 # 打包 Blender 插件
 python build_addon.py
 
 # 启动 MCP 服务器
-uv run blender-mcp
+uv run blender-mcp-ai
 ```
 
-或通过 pip 安装：
-
-```bash
-pip install blender-mcp
-blender-mcp
-```
+> 目前尚未发布到 PyPI。请从源码安装 —— `pip install blender-mcp`
+> 装到的是**另一个**无关的第三方包（见顶部说明）。
 
 然后在 Blender 中：
 
@@ -254,7 +264,7 @@ IDE 配置：
   "mcpServers": {
     "blender": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/blender-mcp", "blender-mcp"]
+      "args": ["run", "--directory", "/path/to/blender-mcp-ai", "blender-mcp-ai"]
     }
   }
 }
@@ -263,8 +273,8 @@ IDE 配置：
 ### 社区
 
 - **[Discord](https://discord.gg/rurjWE45)** — 实时交流、使用帮助、作品展示
-- **[GitHub Discussions](https://github.com/harveyxiacn/blender-mcp/discussions)** — 提问、讨论、展示作品
-- **[Issues](https://github.com/harveyxiacn/blender-mcp/issues)** — 问题反馈与功能建议
+- **[GitHub Discussions](https://github.com/harveyxiacn/blender-mcp-ai/discussions)** — 提问、讨论、展示作品
+- **[Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues)** — 问题反馈与功能建议
 
 ### 文档
 

@@ -15,7 +15,7 @@
 ### 1. 安装 MCP 服务器
 
 ```bash
-pip install blender-mcp
+pip install git+https://github.com/harveyxiacn/blender-mcp-ai.git
 ```
 
 ### 2. 安装 Blender 插件

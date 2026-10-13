@@ -4,7 +4,7 @@
 
 This document describes all tools provided by Blender MCP. Tools are exposed via the MCP protocol and can be used from any MCP-compatible IDE.
 
-This reference covers all stable tool families as of v0.3.0 (51 modules, 359 tools). Smart Tools v2 (`snapshot`, `describe`, `checkpoint`, `quick`) are fully documented below. Experimental modules (`pipeline`, `quality_audit`) are documented at the end.
+This reference covers all stable tool families as of v0.3.0 (56 modules, 380 tools). Smart Tools v2 (`snapshot`, `describe`, `checkpoint`, `quick`) are fully documented below. Experimental modules (`pipeline`, `quality_audit`) are documented at the end.
 
 ## Tool Naming Convention
 

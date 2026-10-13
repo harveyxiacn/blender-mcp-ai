@@ -7,7 +7,7 @@ This roadmap reflects the repository state on 2026-03-10.
 ## What Is Already In Place
 
 - 51 server-side tool modules
-- 359 total tools in source
+- 380 total tools in source
 - skill-based loading with 12 skill groups
 - addon hot reload support
 - training, sport-character, style preset, and procedural material modules

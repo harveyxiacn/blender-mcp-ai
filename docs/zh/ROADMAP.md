@@ -7,7 +7,7 @@
 ## 已具备的基础
 
 - 51 个服务端工具模块
-- 源码中 359 个工具
+- 源码中 380 个工具
 - 12 个 Skill 分组的按需加载体系
 - 插件热更新能力
 - training、sport_character、style_presets、procedural_materials 等扩展模块

@@ -107,7 +107,7 @@
 
 - **Blender 版本**: 5.0+
 - **Python 版本**: 3.10+
-- **blender-mcp**: 已安装并配置
+- **blender-mcp-ai**: 已安装并配置
 - **AI 助手**: 支持 MCP 协议的 AI（如 Claude, OpenCode）
 
 ---
@@ -134,7 +134,7 @@
 - [Blender 官方手册](https://docs.blender.org/manual/zh-hans/latest/)
 - [Blender Python API](https://docs.blender.org/api/current/)
 
-### blender-mcp 项目
+### blender-mcp-ai 项目
 - [项目主页](../../README.md)
 - [API 参考](../API_REFERENCE.md)
 - [教程](../TUTORIALS.md)

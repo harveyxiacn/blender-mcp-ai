@@ -5,7 +5,7 @@
 截至 2026-03-10，仓库当前包含：
 
 - `src/blender_mcp/tools` 下 51 个服务端工具模块
-- 源码中 359 个 `@mcp.tool(...)` 注册
+- 源码中 380 个 `@mcp.tool(...)` 注册
 - `skill_manager.py` 中 12 个 Skill 分组
 - `tools_config.py` 中 6 个加载 Profile
 
@@ -67,7 +67,7 @@ Blender 插件
 | `extended` | 27 | 194 | 增加物理与批处理 |
 | `full` | 50 | 356 | 所有用户可见模块 |
 
-若把 3 个 Skill 元工具单独算入，仓库总计 359 个工具。
+若把 3 个 Skill 元工具单独算入，仓库总计 380 个工具。
 
 ## Skill 盘点
 

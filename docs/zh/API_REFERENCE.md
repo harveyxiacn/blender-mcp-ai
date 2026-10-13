@@ -4,7 +4,7 @@
 
 本文档详细描述了 Blender MCP 提供的所有工具（Tools）及其参数。所有工具都通过 MCP 协议暴露，可在支持 MCP 的 IDE 中使用。
 
-状态说明（2026-03-10）：仓库当前已包含 51 个工具模块、359 个工具注册项。本文档目前对稳定/核心工具族最完整；`training`、`sport_character`、`style_presets`、`procedural_materials` 以及实验性的 automation 相关模块，仍建议结合源码与项目审查报告一并查看。
+状态说明（2026-03-10）：仓库当前已包含 56 个工具模块、380 个工具注册项。本文档目前对稳定/核心工具族最完整；`training`、`sport_character`、`style_presets`、`procedural_materials` 以及实验性的 automation 相关模块，仍建议结合源码与项目审查报告一并查看。
 
 ## 工具命名规范
 

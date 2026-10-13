@@ -11,8 +11,8 @@ Be respectful and constructive. We welcome contributors of all experience levels
 ### 1. Fork & Clone
 
 ```bash
-git clone https://github.com/harveyxiacn/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/harveyxiacn/blender-mcp-ai.git
+cd blender-mcp-ai
 ```
 
 ### 2. Development Setup
@@ -56,7 +56,7 @@ addon/blender_mcp_addon/  # Blender Addon
 
 ### Reporting Bugs
 
-1. Check existing [Issues](https://github.com/harveyxiacn/blender-mcp/issues)
+1. Check existing [Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues)
 2. Create a new issue with:
    - Blender version
    - Python version

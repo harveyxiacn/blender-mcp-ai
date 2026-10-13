@@ -31,7 +31,7 @@ Examples of unacceptable behavior:
 ## Enforcement
 
 Instances of unacceptable behavior may be reported via
-[GitHub Issues](https://github.com/harveyxiacn/blender-mcp/issues) or by
+[GitHub Issues](https://github.com/harveyxiacn/blender-mcp-ai/issues) or by
 contacting the maintainers directly.
 
 ## Attribution

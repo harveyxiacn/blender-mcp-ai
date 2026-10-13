@@ -46,16 +46,16 @@ python -m venv .venv
 # macOS/Linux:
 source .venv/bin/activate
 
-# 安装 blender-mcp
-pip install blender-mcp
+# 安装 blender-mcp-ai
+pip install git+https://github.com/harveyxiacn/blender-mcp-ai.git
 ```
 
 ### 2.2 方式二：从源码安装
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-username/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/your-username/blender-mcp-ai.git
+cd blender-mcp-ai
 
 # 创建虚拟环境
 python -m venv .venv
@@ -77,7 +77,7 @@ pip install -e .
 pip install uv
 
 # 使用 uv 安装
-uv pip install blender-mcp
+uv pip install git+https://github.com/harveyxiacn/blender-mcp-ai.git
 
 # 或从源码
 uv pip install -e .
@@ -122,7 +122,7 @@ python -m blender_mcp install-addon --blender-path "/usr/share/blender/5.0"
    
    从 GitHub Release 页面下载 `blender_mcp_addon.zip`，或从源码目录获取：
    ```
-   blender-mcp/addon/blender_mcp_addon.zip
+   blender-mcp-ai/addon/blender_mcp_addon.zip
    ```
 
 2. **在 Blender 中安装**
@@ -189,7 +189,7 @@ macOS:
 {
   "version": "1.0",
   "servers": {
-    "blender-mcp": {
+    "blender-mcp-ai": {
       "type": "stdio",
       "command": "python",
       "args": ["-m", "blender_mcp"],
@@ -274,7 +274,7 @@ npx @modelcontextprotocol/inspector python -m blender_mcp
 python --version  # 需要 3.10+
 
 # 重新安装依赖
-pip install --upgrade blender-mcp
+pip install --upgrade git+https://github.com/harveyxiacn/blender-mcp-ai.git
 ```
 
 #### 问题：无法连接到 Blender
@@ -328,10 +328,10 @@ python -m blender_mcp --port 9877
 **MCP 服务器日志**：
 ```
 # Windows
-%USERPROFILE%\.blender-mcp\logs\server.log
+%USERPROFILE%\.blender-mcp-ai\logs\server.log
 
 # macOS/Linux
-~/.blender-mcp/logs/server.log
+~/.blender-mcp-ai/logs/server.log
 ```
 
 **Blender 插件日志**：
@@ -339,10 +339,10 @@ python -m blender_mcp --port 9877
 - 或查看：
   ```
   # Windows
-  %USERPROFILE%\.blender-mcp\logs\addon.log
+  %USERPROFILE%\.blender-mcp-ai\logs\addon.log
   
   # macOS/Linux
-  ~/.blender-mcp/logs/addon.log
+  ~/.blender-mcp-ai/logs/addon.log
   ```
 
 ### 6.3 获取帮助
@@ -355,7 +355,7 @@ python -m blender_mcp --port 9877
    ```
 
 2. **提交 Issue**：
-   访问 [GitHub Issues](https://github.com/your-username/blender-mcp/issues) 并提供：
+   访问 [GitHub Issues](https://github.com/your-username/blender-mcp-ai/issues) 并提供：
    - 操作系统版本
    - Blender 版本
    - Python 版本

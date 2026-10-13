@@ -16,7 +16,7 @@ If you discover a security vulnerability in Blender MCP, please report it respon
 
 **Preferred methods:**
 
-1. **GitHub Security Advisories** - Open a private advisory at [https://github.com/harveyxiacn/blender-mcp/security/advisories/new](https://github.com/harveyxiacn/blender-mcp/security/advisories/new).
+1. **GitHub Security Advisories** - Open a private advisory at [https://github.com/harveyxiacn/blender-mcp-ai/security/advisories/new](https://github.com/harveyxiacn/blender-mcp-ai/security/advisories/new).
 2. **Email** - Contact the project maintainers directly with "SECURITY" in the subject line.
 
 **Do not** open a public GitHub issue for security vulnerabilities.

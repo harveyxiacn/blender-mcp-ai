@@ -4,7 +4,7 @@
 
 This quick start matches the repository state on 2026-03-10:
 
-- 359 tools across 51 server-side tool modules
+- 380 tools across 51 server-side tool modules
 - 32 startup tools under the default `skill` profile
 - 12 skill groups that can be activated on demand
 
@@ -18,8 +18,8 @@ This quick start matches the repository state on 2026-03-10:
 ## 1. Install From Source
 
 ```bash
-git clone https://github.com/harveyxiacn/blender-mcp.git
-cd blender-mcp
+git clone https://github.com/harveyxiacn/blender-mcp-ai.git
+cd blender-mcp-ai
 uv sync
 ```
 
@@ -48,7 +48,7 @@ Example `mcp.json`:
   "mcpServers": {
     "blender": {
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/blender-mcp", "blender-mcp"]
+      "args": ["run", "--directory", "/path/to/blender-mcp-ai", "blender-mcp-ai"]
     }
   }
 }
@@ -57,7 +57,7 @@ Example `mcp.json`:
 ## 4. Start The Server
 
 ```bash
-uv run blender-mcp
+uv run blender-mcp-ai
 ```
 
 ## 5. First Session
