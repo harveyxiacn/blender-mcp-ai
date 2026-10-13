@@ -4,7 +4,7 @@
 
 As of 2026-03-10, the repository contains:
 
-- 51 server-side tool modules in `src/blender_mcp/tools`
+- 56 server-side tool modules in `src/blender_mcp/tools`
 - 380 total `@mcp.tool(...)` registrations in source
 - 12 skill groups in `skill_manager.py`
 - 6 loading profiles in `tools_config.py`

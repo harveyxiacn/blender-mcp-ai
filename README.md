@@ -156,6 +156,8 @@ layer, so you can hide everything except the thing you want to look at:
 | `L7_角色骨骼` | Generated character plus an armature | Hide other layers, then *Pose Mode* on `L7_Rig` |
 | `L8_物理` | Cloth and rigid-body simulation | Play the timeline |
 
+**Full step-by-step walkthrough: [docs/en/TOUR.md](docs/en/TOUR.md)** (中文：[docs/zh/TOUR.md](docs/zh/TOUR.md))
+
 If every layer reports `OK`, your install works end to end. To check the
 renderer and exporters too, select `L4_Cam` and press **F12**, or run
 `blender_export_fbx` on any object.
@@ -193,6 +195,7 @@ All documentation is available in **English** and **中文 (Chinese)**.
 | Document | English | 中文 |
 |----------|---------|------|
 | Quick Start | [QUICKSTART](docs/en/QUICKSTART.md) | [快速开始](docs/zh/QUICKSTART.md) |
+| Guided Tour | [TOUR](docs/en/TOUR.md) | [分层演示教程](docs/zh/TOUR.md) |
 | Installation | [INSTALLATION](docs/en/INSTALLATION.md) | [安装指南](docs/zh/INSTALLATION.md) |
 | Architecture | [ARCHITECTURE](docs/en/ARCHITECTURE.md) | [架构设计](docs/zh/ARCHITECTURE.md) |
 | API Reference | [API_REFERENCE](docs/en/API_REFERENCE.md) | [API 参考](docs/zh/API_REFERENCE.md) |
@@ -329,6 +332,8 @@ uv run python scripts/demo_tour.py --clean
 | `L6_动画` | 关键帧弹跳 + 自转 | 时间轴按 **空格** 播放 |
 | `L7_角色骨骼` | 程序生成角色 + 骨架 | 隐藏其他图层，对 `L7_Rig` 进**姿势模式** |
 | `L8_物理` | 布料 + 刚体模拟 | 播放时间轴 |
+
+**逐层详解请看：[docs/zh/TOUR.md](docs/zh/TOUR.md)**（English：[docs/en/TOUR.md](docs/en/TOUR.md)）
 
 每一层都显示 `OK`，就说明整套流程跑通了。想连渲染和导出一起验证，选中 `L4_Cam` 按 **F12**，
 或对任意物体调用 `blender_export_fbx`。

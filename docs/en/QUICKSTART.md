@@ -4,7 +4,7 @@
 
 This quick start matches the repository state on 2026-03-10:
 
-- 380 tools across 51 server-side tool modules
+- 380 tools across 56 server-side tool modules
 - 32 startup tools under the default `skill` profile
 - 12 skill groups that can be activated on demand
 
