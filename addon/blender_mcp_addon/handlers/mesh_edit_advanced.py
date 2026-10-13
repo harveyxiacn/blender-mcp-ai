@@ -11,6 +11,8 @@ from typing import Any
 import bmesh
 import bpy
 
+from .compat import ensure_object_mode
+
 
 def handle_edit(params: dict[str, Any]) -> dict[str, Any]:
     """Execute advanced mesh editing operations"""
@@ -131,8 +133,10 @@ def handle_edit(params: dict[str, Any]) -> dict[str, Any]:
             }
 
     except Exception as e:
+        ensure_object_mode()
         return {"success": False, "error": {"code": "OPERATION_FAILED", "message": str(e)}}
 
+    ensure_object_mode()
     return {"success": True, "data": {}}
 
 
@@ -196,8 +200,10 @@ def handle_edge_mark(params: dict[str, Any]) -> dict[str, Any]:
         bmesh.update_edit_mesh(obj.data)
 
     except Exception as e:
+        ensure_object_mode()
         return {"success": False, "error": {"code": "MARK_FAILED", "message": str(e)}}
 
+    ensure_object_mode()
     return {"success": True, "data": {"marked_edges": len(selected_edges), "value": actual_value}}
 
 
@@ -286,6 +292,7 @@ def handle_select_by_trait(params: dict[str, Any]) -> dict[str, Any]:
                 "error": {"code": "UNKNOWN_TRAIT", "message": f"Unknown trait type: {trait}"},
             }
     except Exception as e:
+        ensure_object_mode()
         return {"success": False, "error": {"code": "SELECT_FAILED", "message": str(e)}}
 
     # Count selected elements
@@ -297,6 +304,7 @@ def handle_select_by_trait(params: dict[str, Any]) -> dict[str, Any]:
     else:
         count = sum(1 for f in bm.faces if f.select)
 
+    ensure_object_mode()
     return {"success": True, "data": {"selected_count": count}}
 
 

@@ -8,7 +8,7 @@ from typing import Any
 
 import bpy
 
-from .compat import select_only
+from .compat import ensure_object_mode, select_only
 
 
 def _apply_modifier(obj: "bpy.types.Object", modifier_name: str) -> str | None:
@@ -106,6 +106,7 @@ def handle_select(params: dict[str, Any]) -> dict[str, Any]:
     elif action == "LINKED":
         bpy.ops.mesh.select_linked()
 
+    ensure_object_mode()
     return {"success": True, "data": {}}
 
 
@@ -138,6 +139,7 @@ def handle_extrude(params: dict[str, Any]) -> dict[str, Any]:
             }
         )
 
+    ensure_object_mode()
     return {"success": True, "data": {}}
 
 
@@ -161,6 +163,7 @@ def handle_subdivide(params: dict[str, Any]) -> dict[str, Any]:
 
     bpy.ops.mesh.subdivide(number_cuts=cuts, smoothness=smoothness)
 
+    ensure_object_mode()
     return {"success": True, "data": {}}
 
 
@@ -186,6 +189,7 @@ def handle_bevel(params: dict[str, Any]) -> dict[str, Any]:
 
     bpy.ops.mesh.bevel(offset=width, segments=segments, profile=profile, affect=affect)
 
+    ensure_object_mode()
     return {"success": True, "data": {}}
 
 

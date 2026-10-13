@@ -67,6 +67,12 @@ def enrich_error(result: dict[str, Any]) -> dict[str, Any]:
     """
     if not result.get("success") and "error" in result:
         error = result["error"]
+        # A handler can return a bare string by mistake. Every downstream
+        # consumer expects the {code, message} envelope, so normalise it here
+        # rather than letting `error.get(...)` blow up the whole call.
+        if not isinstance(error, dict):
+            error = {"code": "HANDLER_ERROR", "message": str(error)}
+            result["error"] = error
         if "suggestion" not in error:
             code = error.get("code", "")
             error["suggestion"] = SUGGESTIONS.get(code, DEFAULT_SUGGESTION)

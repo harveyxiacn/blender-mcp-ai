@@ -25,7 +25,10 @@ def handle_training(params: dict[str, Any]) -> dict[str, Any]:
     handler = handlers.get(action)
     if handler:
         return handler(params)
-    return {"success": False, "error": f"Unknown training action: {action}"}
+    return {
+        "success": False,
+        "error": {"code": "UNKNOWN_ACTION", "message": f"Unknown training action: {action}"},
+    }
 
 
 def _setup_penglai_scene(params: dict[str, Any]) -> dict[str, Any]:
@@ -105,7 +108,7 @@ def _setup_penglai_scene(params: dict[str, Any]) -> dict[str, Any]:
         }
 
     except Exception as e:
-        return {"success": False, "error": str(e)}
+        return {"success": False, "error": {"code": "SETUP_FAILED", "message": str(e)}}
 
 
 def _setup_fanzhendong_scene(params: dict[str, Any]) -> dict[str, Any]:
@@ -220,7 +223,7 @@ def _setup_fanzhendong_scene(params: dict[str, Any]) -> dict[str, Any]:
         }
 
     except Exception as e:
-        return {"success": False, "error": str(e)}
+        return {"success": False, "error": {"code": "SETUP_FAILED", "message": str(e)}}
 
 
 def _create_exercise_scene(params: dict[str, Any]) -> dict[str, Any]:
@@ -254,7 +257,7 @@ def _create_exercise_scene(params: dict[str, Any]) -> dict[str, Any]:
         }
 
     except Exception as e:
-        return {"success": False, "error": str(e)}
+        return {"success": False, "error": {"code": "SETUP_FAILED", "message": str(e)}}
 
 
 def _verify_exercise(params: dict[str, Any]) -> dict[str, Any]:
@@ -281,7 +284,7 @@ def _verify_exercise(params: dict[str, Any]) -> dict[str, Any]:
         }
 
     except Exception as e:
-        return {"success": False, "error": str(e)}
+        return {"success": False, "error": {"code": "VERIFY_FAILED", "message": str(e)}}
 
 
 def _cleanup_scene(params: dict[str, Any]) -> dict[str, Any]:
@@ -302,4 +305,4 @@ def _cleanup_scene(params: dict[str, Any]) -> dict[str, Any]:
         }
 
     except Exception as e:
-        return {"success": False, "error": str(e)}
+        return {"success": False, "error": {"code": "CLEANUP_FAILED", "message": str(e)}}
