@@ -196,6 +196,14 @@ class BlenderConnection:
                 if idle < self.heartbeat_interval:
                     continue
 
+                # Blender executes commands on its main thread, so a long render
+                # or export blocks the addon from answering system.get_info until
+                # it returns. While a command is still outstanding the link is
+                # plainly alive: probing then would only time out and tear down a
+                # perfectly healthy connection.
+                if any(not rid.startswith("heartbeat-") for rid in self._pending_requests):
+                    continue
+
                 request_id = f"heartbeat-{uuid.uuid4().hex[:8]}"
                 request = {
                     "id": request_id,
@@ -228,7 +236,11 @@ class BlenderConnection:
 
     async def _read_responses(self) -> None:
         """Continuously read responses"""
-        buffer = ""
+        # Buffer raw bytes and decode only complete lines: read() can split a
+        # multi-byte UTF-8 character across reads, and decoding each chunk as it
+        # arrived turned that split into a replacement character and then a
+        # dropped message. Same defect as the addon-side framing bug.
+        buffer = b""
 
         while self._connected and self._reader:
             try:
@@ -237,10 +249,11 @@ class BlenderConnection:
                     logger.warning("Connection closed")
                     break
 
-                buffer += data.decode("utf-8", errors="replace")
+                buffer += data
 
-                while "\n" in buffer:
-                    line, buffer = buffer.split("\n", 1)
+                while b"\n" in buffer:
+                    raw_line, buffer = buffer.split(b"\n", 1)
+                    line = raw_line.decode("utf-8", errors="replace")
                     if line.strip():
                         try:
                             response = json.loads(line)
