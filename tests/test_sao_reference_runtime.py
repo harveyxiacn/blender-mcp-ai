@@ -17,6 +17,8 @@ def _load_runtime_module():
         / "scripts"
         / "reference_brief_runtime.py"
     )
+    if not module_path.exists():
+        pytest.skip("examples/刀剑神域 is absent (copyrighted examples removed)")
     spec = importlib.util.spec_from_file_location("reference_brief_runtime", module_path)
     assert spec is not None
     assert spec.loader is not None

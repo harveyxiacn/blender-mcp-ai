@@ -4,11 +4,25 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from blender_mcp.tools.reference import (
     build_reference_brief,
     build_reference_model_audit,
     inspect_reference_pack_data,
 )
+
+SAO_EXAMPLES = Path(__file__).resolve().parent.parent / "examples" / "刀剑神域"
+
+
+def _require_sao_examples() -> None:
+    """Skip when the SAO examples are absent.
+
+    They were removed from the repository as copyrighted fan-art assets, so the
+    tests that use them as a fixture have nothing to assert against.
+    """
+    if not SAO_EXAMPLES.exists():
+        pytest.skip("examples/刀剑神域 is absent (copyrighted examples removed)")
 
 
 def _touch_image(path: Path) -> None:
@@ -178,6 +192,7 @@ def test_reference_tool_source_registers_model_audit_tool() -> None:
 
 
 def test_sao_reference_workflow_script_wires_reference_pipeline() -> None:
+    _require_sao_examples()
     source = (
         Path(__file__).resolve().parent.parent
         / "examples"
@@ -194,6 +209,7 @@ def test_sao_reference_workflow_script_wires_reference_pipeline() -> None:
 
 
 def test_sao_reference_manifest_exists() -> None:
+    _require_sao_examples()
     path = (
         Path(__file__).resolve().parent.parent
         / "examples"
